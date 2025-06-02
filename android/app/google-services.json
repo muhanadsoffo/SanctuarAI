@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1008070353742",
+    "project_id": "sanctuarai",
+    "storage_bucket": "sanctuarai.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1008070353742:android:facd06a33a168bfcaf341f",
+        "android_client_info": {
+          "package_name": "com.example.sanctuarai"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAC-PJY1FAPg0fIGSbsgViWQfO3NNf9UEs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
