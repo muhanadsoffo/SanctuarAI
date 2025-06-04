@@ -15,7 +15,7 @@ class _WelcomePageState extends State<WelcomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xF2457b9d),
+      backgroundColor: Color(0xFF457b9d),
 
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -28,7 +28,7 @@ class _WelcomePageState extends State<WelcomePage> {
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.vertical(top: Radius.circular(30)),
               ),
-              height: 300,
+              height: 350,
               width: double.infinity,
 
               child: Lottie.asset(
@@ -48,16 +48,17 @@ class _WelcomePageState extends State<WelcomePage> {
                 padding: const EdgeInsets.all(8.0),
                 child: Column(
                   children: [
-                    SizedBox(height: 50),
+                    SizedBox(height: 30),
                     Text(
                       "WELCOME TO SANCTUARAI",
                       style: TextStyle(
                         fontSize: 25,
                         fontStyle: FontStyle.italic,
+                        fontWeight: FontWeight.bold
                       ),
                     ),
-                    Text("Your safe place and sanctuary",style: TextStyle(fontSize: 20),),
-                    const SizedBox(height: 50),
+                    Text("Your safe place and sanctuary",style: TextStyle(fontSize: 20,),),
+                    const SizedBox(height: 70),
                     FilledButton(
                       onPressed: () {
                         Navigator.push(context, MaterialPageRoute(builder: (context) {
@@ -67,7 +68,7 @@ class _WelcomePageState extends State<WelcomePage> {
 
                       style: FilledButton.styleFrom(
                         minimumSize: Size(double.infinity, 60),
-                      ), child: Text("Login", style: TextStyle(fontSize: 20)),
+                      ), child: Text("Login", style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold)),
                     ),
                     const SizedBox(height: 25),
                     RichText(
