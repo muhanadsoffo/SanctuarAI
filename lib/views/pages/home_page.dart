@@ -11,7 +11,10 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Column(
-      children: [Text("Hey there",style: TextStyle(fontSize: 30),)],
+      children: [
+        Text("Hey there", style: TextStyle(fontSize: 30)),
+
+      ],
     );
   }
 }
