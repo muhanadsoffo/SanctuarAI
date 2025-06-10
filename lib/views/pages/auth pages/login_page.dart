@@ -1,10 +1,20 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:sanctuarai/controllers/auth_controller.dart';
+import 'package:sanctuarai/services/auth_service.dart';
 import 'package:sanctuarai/views/pages/auth%20pages/register_page.dart';
 import 'package:sanctuarai/views/widget_tree.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
+
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -19,9 +29,7 @@ class LoginPage extends StatelessWidget {
           builder: (context, constraints) {
             return SingleChildScrollView(
               child: ConstrainedBox(
-                constraints: BoxConstraints(
-                  minHeight: constraints.maxHeight,
-                ),
+                constraints: BoxConstraints(minHeight: constraints.maxHeight),
                 child: IntrinsicHeight(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -67,10 +75,13 @@ class LoginPage extends StatelessWidget {
                                   children: [
                                     SizedBox(height: 30),
                                     TextField(
+                                      controller: emailController,
                                       decoration: InputDecoration(
                                         prefixIcon: Icon(Icons.email),
                                         border: OutlineInputBorder(
-                                          borderRadius: BorderRadius.circular(14),
+                                          borderRadius: BorderRadius.circular(
+                                            14,
+                                          ),
                                         ),
                                         hintText: "Enter your Email address",
                                       ),
@@ -78,11 +89,14 @@ class LoginPage extends StatelessWidget {
                                     ),
                                     SizedBox(height: 30),
                                     TextField(
+                                      controller: passwordController,
                                       obscureText: true,
                                       decoration: InputDecoration(
                                         prefixIcon: Icon(Icons.lock),
                                         border: OutlineInputBorder(
-                                          borderRadius: BorderRadius.circular(14),
+                                          borderRadius: BorderRadius.circular(
+                                            14,
+                                          ),
                                         ),
                                         hintText: "Enter your Password",
                                       ),
@@ -95,16 +109,35 @@ class LoginPage extends StatelessWidget {
                                   style: FilledButton.styleFrom(
                                     minimumSize: Size(260, 60),
                                   ),
-                                  onPressed: () {
-                                    Navigator.pushAndRemoveUntil(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) {
-                                          return WidgetTree();
-                                        },
-                                      ),
-                                          (route) => false,
-                                    );
+                                  onPressed: () async {
+                                    String? error = await AuthController
+                                        .authController
+                                        .login(
+                                          email: emailController.text,
+                                          password: passwordController.text,
+                                        );
+                                    if (error != null) {
+                                      setState(() {
+                                        ScaffoldMessenger.of(
+                                          context,
+                                        ).showSnackBar(
+                                          SnackBar(
+                                            content: Text(error),
+                                            backgroundColor: Colors.red,
+                                          ),
+                                        );
+                                      });
+                                    } else {
+                                      Navigator.pushAndRemoveUntil(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) {
+                                            return WidgetTree();
+                                          },
+                                        ),
+                                        (route) => false,
+                                      );
+                                    }
                                   },
                                   child: Text(
                                     "Login",
@@ -129,17 +162,18 @@ class LoginPage extends StatelessWidget {
                                           color: Colors.blue,
                                           fontWeight: FontWeight.bold,
                                         ),
-                                        recognizer: TapGestureRecognizer()
-                                          ..onTap = () {
-                                            Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                builder: (context) {
-                                                  return RegisterPage();
-                                                },
-                                              ),
-                                            );
-                                          },
+                                        recognizer:
+                                            TapGestureRecognizer()
+                                              ..onTap = () {
+                                                Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                    builder: (context) {
+                                                      return RegisterPage();
+                                                    },
+                                                  ),
+                                                );
+                                              },
                                       ),
                                     ],
                                   ),

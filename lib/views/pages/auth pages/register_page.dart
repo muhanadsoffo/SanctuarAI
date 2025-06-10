@@ -1,10 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:sanctuarai/controllers/auth_controller.dart';
+import 'package:sanctuarai/views/pages/auth%20pages/login_page.dart';
+import 'package:sanctuarai/views/pages/home_page.dart';
+import 'package:sanctuarai/views/widget_tree.dart';
 
-class RegisterPage extends StatelessWidget {
+class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
 
   @override
+  State<RegisterPage> createState() => _RegisterPageState();
+}
+
+class _RegisterPageState extends State<RegisterPage> {
+  final nameController = TextEditingController();
+  final emailController = TextEditingController();
+  final passController = TextEditingController();
+  @override
   Widget build(BuildContext context) {
+
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
@@ -17,8 +30,7 @@ class RegisterPage extends StatelessWidget {
           builder: (context, constraints) {
             return SingleChildScrollView(
               child: ConstrainedBox(
-                constraints: BoxConstraints(
-                    minHeight: constraints.maxHeight),
+                constraints: BoxConstraints(minHeight: constraints.maxHeight),
                 child: IntrinsicHeight(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -62,7 +74,9 @@ class RegisterPage extends StatelessWidget {
                                   ),
                                   SizedBox(height: 30),
                                   TextField(
+                                    controller: nameController,
                                     decoration: InputDecoration(
+
                                       prefixIcon: Icon(Icons.person),
                                       hintText: "Enter your full name",
                                       border: OutlineInputBorder(
@@ -73,6 +87,7 @@ class RegisterPage extends StatelessWidget {
                                   ),
                                   SizedBox(height: 30),
                                   TextField(
+                                    controller: emailController,
                                     decoration: InputDecoration(
                                       prefixIcon: Icon(Icons.email),
                                       hintText: "Enter your Email address",
@@ -84,6 +99,7 @@ class RegisterPage extends StatelessWidget {
                                   ),
                                   SizedBox(height: 30),
                                   TextField(
+                                    controller: passController,
                                     obscureText: true,
                                     decoration: InputDecoration(
                                       prefixIcon: Icon(Icons.lock),
@@ -99,7 +115,33 @@ class RegisterPage extends StatelessWidget {
                                     style: FilledButton.styleFrom(
                                       minimumSize: Size(260, 60),
                                     ),
-                                    onPressed: () {},
+                                    onPressed: () async {
+                                      String? error = await AuthController.authController
+                                          .signUp(
+                                            email: emailController.text,
+                                            password: passController.text,
+                                            userName: nameController.text,
+                                          );
+                                      if (error != null) {
+                                        setState(() {
+                                          ScaffoldMessenger.of(
+                                            context,
+                                          ).showSnackBar(
+                                            SnackBar(content: Text(error),backgroundColor: Colors.red,),
+                                          );
+                                        });
+
+                                      } else {
+                                        Navigator.pushReplacement(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) {
+                                              return LoginPage();
+                                            },
+                                          ),
+                                        );
+                                      }
+                                    },
                                     child: Text(
                                       "Sign up",
                                       style: TextStyle(
