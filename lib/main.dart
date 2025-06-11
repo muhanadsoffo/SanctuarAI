@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:sanctuarai/views/auth_layout.dart';
 import 'package:sanctuarai/views/pages/auth%20pages/welcome_page.dart';
 
 
@@ -27,7 +28,7 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(colorScheme: ColorScheme.fromSeed(seedColor: Colors.lightBlueAccent)),
-      home: WelcomePage(),
+      home: AuthLayout(),
     );
   }
 }

@@ -110,14 +110,13 @@ class _LoginPageState extends State<LoginPage> {
                                     minimumSize: Size(260, 60),
                                   ),
                                   onPressed: () async {
-                                    String? error = await AuthController
+                                    final error = await AuthController
                                         .authController
                                         .login(
                                           email: emailController.text,
                                           password: passwordController.text,
                                         );
                                     if (error != null) {
-                                      setState(() {
                                         ScaffoldMessenger.of(
                                           context,
                                         ).showSnackBar(
@@ -126,18 +125,7 @@ class _LoginPageState extends State<LoginPage> {
                                             backgroundColor: Colors.red,
                                           ),
                                         );
-                                      });
-                                    } else {
-                                      Navigator.pushAndRemoveUntil(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) {
-                                            return WidgetTree();
-                                          },
-                                        ),
-                                        (route) => false,
-                                      );
-                                    }
+                                    }else if (error == null) Navigator.pop(context);
                                   },
                                   child: Text(
                                     "Login",

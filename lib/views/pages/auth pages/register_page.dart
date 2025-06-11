@@ -116,20 +116,19 @@ class _RegisterPageState extends State<RegisterPage> {
                                       minimumSize: Size(260, 60),
                                     ),
                                     onPressed: () async {
-                                      String? error = await AuthController.authController
+                                      final error = await AuthController.authController
                                           .signUp(
                                             email: emailController.text,
                                             password: passController.text,
                                             userName: nameController.text,
                                           );
                                       if (error != null) {
-                                        setState(() {
                                           ScaffoldMessenger.of(
                                             context,
                                           ).showSnackBar(
                                             SnackBar(content: Text(error),backgroundColor: Colors.red,),
                                           );
-                                        });
+
 
                                       } else {
                                         Navigator.pushReplacement(
