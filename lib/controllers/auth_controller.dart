@@ -42,7 +42,7 @@ class AuthController {
       await authService.value.signOut();
       return null;
     } on FirebaseAuthException catch (e) {
-      return e.message ?? "error unkown";
+      return e.message ?? "error unknown";
     }
   }
 
@@ -64,6 +64,35 @@ class AuthController {
 
     } on FirebaseAuthException catch (e) {
       return e.message ?? "unknown error";
+    }
+  }
+
+  Future<String?> deleteAccount({
+    required String email,
+    required String password
+}) async{
+    if (email.isEmpty || password.isEmpty) {
+      return "Please fill all the information";
+    }
+    try{
+      await authService.value.deleteAccount(email: email, password: password);
+      return null;
+    } on FirebaseAuthException catch (e){
+      return e.message ?? "unknown error";
+    }
+  }
+
+  Future<String?> resetPassword({
+    required String email
+}) async{
+    if (email.isEmpty ) {
+      return "Please fill all the information";
+    }
+    try{
+      await authService.value.resetPassword(email: email);
+      return null;
+    }on FirebaseAuthException catch(e){
+      return e.message ?? "Unknown error";
     }
   }
 }

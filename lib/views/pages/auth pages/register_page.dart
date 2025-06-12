@@ -113,7 +113,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                   SizedBox(height: 30),
                                   FilledButton(
                                     style: FilledButton.styleFrom(
-                                      minimumSize: Size(260, 60),
+                                      minimumSize: Size(double.infinity, 60),
                                     ),
                                     onPressed: () async {
                                       final error = await AuthController.authController

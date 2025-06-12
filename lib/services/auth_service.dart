@@ -40,6 +40,7 @@ class AuthService {
 
   Future<void> updateUsername({required String username}) async {
     await currentUser!.updateDisplayName(username);
+    
   }
 
   Future<void> deleteAccount({
@@ -67,4 +68,5 @@ class AuthService {
     await currentUser!.reauthenticateWithCredential(credential);
     await currentUser!.updatePassword(newPassword);
   }
+
 }

@@ -119,7 +119,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                     Navigator.pop(context);
                   }
                 },
-                style: FilledButton.styleFrom(minimumSize: Size(260, 60)),
+                style: FilledButton.styleFrom(minimumSize: Size(double.infinity, 60)),
                 child: Text(
                   "Change",
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),

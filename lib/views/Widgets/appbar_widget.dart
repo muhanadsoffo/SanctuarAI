@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sanctuarai/controllers/auth_controller.dart';
 import 'package:sanctuarai/services/auth_service.dart';
-import 'package:sanctuarai/views/pages/profile_page.dart';
+import 'package:sanctuarai/views/pages/profile%20pages/profile_page.dart';
 
 class AppbarWidget extends StatelessWidget implements PreferredSizeWidget {
   const AppbarWidget({super.key});

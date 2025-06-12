@@ -1,24 +1,13 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:sanctuarai/controllers/auth_controller.dart';
-import 'package:sanctuarai/services/auth_service.dart';
-import 'package:sanctuarai/views/pages/auth%20pages/register_page.dart';
-import 'package:sanctuarai/views/pages/auth%20pages/reset_password_page.dart';
-import 'package:sanctuarai/views/widget_tree.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+import '../../../controllers/auth_controller.dart';
 
-  @override
-  State<LoginPage> createState() => _LoginPageState();
-}
-
-class _LoginPageState extends State<LoginPage> {
-  final emailController = TextEditingController();
-  final passwordController = TextEditingController();
+class ResetPasswordPage extends StatelessWidget {
+  const ResetPasswordPage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final emailController = TextEditingController();
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
@@ -39,9 +28,9 @@ class _LoginPageState extends State<LoginPage> {
                       Padding(
                         padding: const EdgeInsets.only(left: 15.0),
                         child: Container(
-                          height: 150,
+                          height: 230,
                           child: Text(
-                            "LOGIN",
+                            "Reset password",
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 60,
@@ -65,7 +54,7 @@ class _LoginPageState extends State<LoginPage> {
                               children: [
                                 SizedBox(height: 25),
                                 Text(
-                                  "Welcome back!",
+                                  "Forgot your password?",
                                   style: TextStyle(
                                     fontSize: 30,
                                     fontWeight: FontWeight.bold,
@@ -88,24 +77,11 @@ class _LoginPageState extends State<LoginPage> {
                                       ),
                                       style: TextStyle(height: 2),
                                     ),
+
                                     SizedBox(height: 30),
-                                    TextField(
-                                      controller: passwordController,
-                                      obscureText: true,
-                                      decoration: InputDecoration(
-                                        prefixIcon: Icon(Icons.lock),
-                                        border: OutlineInputBorder(
-                                          borderRadius: BorderRadius.circular(
-                                            14,
-                                          ),
-                                        ),
-                                        hintText: "Enter your Password",
-                                      ),
-                                      style: TextStyle(height: 2),
-                                    ),
+
                                   ],
                                 ),
-                                SizedBox(height: 30),
                                 FilledButton(
                                   style: FilledButton.styleFrom(
                                     minimumSize: Size(double.infinity, 60),
@@ -113,10 +89,9 @@ class _LoginPageState extends State<LoginPage> {
                                   onPressed: () async {
                                     final error = await AuthController
                                         .authController
-                                        .login(
-                                          email: emailController.text,
-                                          password: passwordController.text,
-                                        );
+                                        .resetPassword(
+                                      email: emailController.text,
+                                    );
                                     if (error != null) {
                                       ScaffoldMessenger.of(
                                         context,
@@ -126,46 +101,26 @@ class _LoginPageState extends State<LoginPage> {
                                           backgroundColor: Colors.red,
                                         ),
                                       );
-                                    } else if (error == null)
+                                    } else if (error == null) {
+                                      ScaffoldMessenger.of(
+                                        context,
+                                      ).showSnackBar(
+                                        SnackBar(
+                                          content: Text(
+                                            "an email has been sent to you",
+                                          ),
+                                          backgroundColor: Colors.green,
+                                        ),
+                                      );
                                       Navigator.pop(context);
+                                    }
                                   },
                                   child: Text(
-                                    "Login",
+                                    "Reset",
                                     style: TextStyle(
                                       fontSize: 20,
                                       fontWeight: FontWeight.bold,
                                     ),
-                                  ),
-                                ),
-                                SizedBox(height: 30),
-                                RichText(
-                                  text: TextSpan(
-                                    style: TextStyle(
-                                      fontSize: 15,
-                                      color: Colors.black,
-                                    ),
-                                    children: <TextSpan>[
-                                      TextSpan(text: "Forgot your password? "),
-                                      TextSpan(
-                                        text: "Click Here!",
-                                        style: TextStyle(
-                                          color: Colors.blue,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                        recognizer:
-                                            TapGestureRecognizer()
-                                              ..onTap = () {
-                                                Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                    builder: (context) {
-                                                      return ResetPasswordPage();
-                                                    },
-                                                  ),
-                                                );
-                                              },
-                                      ),
-                                    ],
                                   ),
                                 ),
                               ],
@@ -182,5 +137,6 @@ class _LoginPageState extends State<LoginPage> {
         ),
       ),
     );
+    ;
   }
 }
