@@ -131,14 +131,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
 
                                       } else {
-                                        Navigator.pushReplacement(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) {
-                                              return LoginPage();
-                                            },
-                                          ),
-                                        );
+                                        Navigator.pop(context);
                                       }
                                     },
                                     child: Text(

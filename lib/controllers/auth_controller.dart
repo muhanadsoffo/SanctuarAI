@@ -1,5 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:sanctuarai/services/auth_service.dart';
+import 'package:sanctuarai/services/user_service.dart';
 
 class AuthController {
   static final authController = AuthController();
@@ -13,8 +15,9 @@ class AuthController {
       return "Please fill all the information";
     }
     try {
-      await authService.value.createAccount(email: email, password: password);
+       UserCredential userCred = await authService.value.createAccount(email: email, password: password);
       await authService.value.updateUsername(username: userName);
+      await userService.value.createUserProfile(uid: userCred.user!.uid, name: userName, email: email);
       return null;
     } on FirebaseAuthException catch (e) {
       print(e.message);
@@ -75,6 +78,8 @@ class AuthController {
       return "Please fill all the information";
     }
     try{
+      final user= authService.value.currentUser!;
+      await FirebaseFirestore.instance.collection('users').doc(user.uid).delete();
       await authService.value.deleteAccount(email: email, password: password);
       return null;
     } on FirebaseAuthException catch (e){
