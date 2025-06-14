@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sanctuarai/views/Widgets/profile_picture_widget.dart';
 import 'package:sanctuarai/views/pages/profile%20pages/change_password_page.dart';
 import 'package:sanctuarai/views/pages/profile%20pages/delete_account_page.dart';
 import 'package:sanctuarai/views/pages/profile%20pages/user_name.dart';
@@ -18,7 +19,7 @@ class _ProfilePageState extends State<ProfilePage> {
       body: Column(
         children: [
           SizedBox(height: 20,),
-          CircleAvatar(radius: 70,backgroundColor: Colors.grey,),
+          ProfilePictureWidget(),
           SizedBox(height: 20,),
           UserName(),
           SizedBox(height: 20,),

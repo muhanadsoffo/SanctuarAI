@@ -1,31 +1,51 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 
 ValueNotifier<UserService> userService = ValueNotifier(UserService());
 
-class UserService{
+class UserService {
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
+  final FirebaseStorage storage = FirebaseStorage.instance;
 
   Future<void> createUserProfile({
     required String uid,
     required String name,
     required String email,
     String? profilePicture,
-    String? bio
-
-}) async{
+    String? bio,
+  }) async {
     await firestore.collection('users').doc(uid).set({
       'name': name,
       'email': email,
       'createdAt': Timestamp.now(),
       'profilePicture': profilePicture ?? '',
-      'bio' : bio ?? '',
+      'bio': bio ?? '',
     });
   }
 
-
-  Future<DocumentSnapshot> getUserdata(String uid) async{
+  Future<DocumentSnapshot> getUserdata(String uid) async {
     return await firestore.collection('users').doc(uid).get();
   }
 
+  //Todo: implement a function to update the profile picture
+  Future<String?> updateProfilePicture({
+    required String uid,
+    required File imageFile,
+  }) async {
+    //here we are creating a folder named profile_pictures if it doesn't exist and creating a unique filename for the user's picture
+    final ref = storage.ref().child('profile_pictures').child('$uid.jpg');
+    await ref.putFile(imageFile);
+    final imageUrl = await ref.getDownloadURL();
+    await firestore.collection('users').doc(uid).update({
+      'profilePicture': imageUrl,
+    });
+    return imageUrl;
+  }
+
+  //Todo: implement a function to update the bio
+
+  //Todo: implement a function to update the name
 }
