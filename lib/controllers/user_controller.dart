@@ -27,6 +27,20 @@ class UserController {
     }
   }
   //Todo: implement a function to update the bio
+Future<String?> updateUserBio({
+    required String bio
+}) async{
+    final uid = authService.value.currentUser!.uid;
+    if(bio.isEmpty || uid.isEmpty){
+      return "invalid info or you're not logged in";
+    }
+    try{
+      await userService.value.updateBio(uid: uid, bio: bio.trim());
+      return null;
+    }catch(e){
+      return "Failed to update";
+    }
+}
 
   //Todo: implement a function to update the name
 }

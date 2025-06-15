@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:sanctuarai/views/Widgets/profile_picture_widget.dart';
+import 'package:sanctuarai/views/Widgets/profile%20widgets/bio_widget.dart';
+import 'package:sanctuarai/views/Widgets/profile%20widgets/profile_picture_widget.dart';
 import 'package:sanctuarai/views/pages/profile%20pages/change_password_page.dart';
 import 'package:sanctuarai/views/pages/profile%20pages/delete_account_page.dart';
 import 'package:sanctuarai/views/pages/profile%20pages/user_name.dart';
@@ -17,11 +18,14 @@ class _ProfilePageState extends State<ProfilePage> {
     return Scaffold(
       appBar: AppBar(backgroundColor: Color(0xFF457b9d)),
       body: Column(
+
         children: [
           SizedBox(height: 20,),
           ProfilePictureWidget(),
           SizedBox(height: 20,),
           UserName(),
+          SizedBox(height: 20,),
+          BioWidget(),
           SizedBox(height: 20,),
           ListTile(
             title: Text(

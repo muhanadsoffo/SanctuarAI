@@ -36,13 +36,12 @@ class _ProfilePictureWidgetState extends State<ProfilePictureWidget> {
         CircleAvatar(
           radius: 70,
           backgroundColor: Colors.grey,
-          backgroundImage: (imageUrl != null && imageUrl!.isNotEmpty)
+          backgroundImage: (imageUrl != null && imageUrl!.trim().isNotEmpty)
               ? NetworkImage(imageUrl!)
               : null,
-          child: (imageUrl == null || imageUrl!.isEmpty)
+          child: (imageUrl == null || imageUrl!.trim().isEmpty)
               ? Icon(Icons.person, size: 60)
               : null,
-
         ),
         IconButton(onPressed: () async{
           final newUrl = await UserController().editProfilePicture();
@@ -55,4 +54,5 @@ class _ProfilePictureWidgetState extends State<ProfilePictureWidget> {
       ],
     );
   }
+
 }
