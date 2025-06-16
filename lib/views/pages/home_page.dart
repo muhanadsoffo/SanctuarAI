@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sanctuarai/views/Widgets/navbar_widget.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -14,7 +15,9 @@ class _HomePageState extends State<HomePage> {
       children: [
         Text("Hey there", style: TextStyle(fontSize: 30)),
 
+
       ],
     );
+
   }
 }
