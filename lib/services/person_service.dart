@@ -23,4 +23,8 @@ class PersonService {
       'personPicture': personPicture ?? "",
     });
   }
+
+  Future<QuerySnapshot<Map<String, dynamic>>> getAllPersons(String uid) async{
+    return await firestore.collection('users').doc(uid).collection('persons').get();
+  }
 }

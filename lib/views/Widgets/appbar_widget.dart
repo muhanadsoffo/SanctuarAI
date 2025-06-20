@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sanctuarai/controllers/auth_controller.dart';
 import 'package:sanctuarai/services/auth_service.dart';
+import 'package:sanctuarai/views/pages/persons%20pages/persons_page.dart';
 import 'package:sanctuarai/views/pages/profile%20pages/profile_page.dart';
 
 class AppbarWidget extends StatelessWidget implements PreferredSizeWidget {
@@ -22,7 +23,11 @@ class AppbarWidget extends StatelessWidget implements PreferredSizeWidget {
             );
           }
 
-        }, icon: Icon(Icons.logout,color: Colors.white,))
+        }, icon: Icon(Icons.logout,color: Colors.white,)),IconButton(onPressed: () {
+          Navigator.push(context, MaterialPageRoute(builder: (context) {
+            return PersonsPage();
+          },));
+        }, icon: Icon(Icons.person))
       ],
       title: GestureDetector(
         onTap: () {
