@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:sanctuarai/services/auth_service.dart';
 ValueNotifier<PersonService> personService = ValueNotifier(PersonService());
 class PersonService {
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
@@ -26,5 +27,11 @@ class PersonService {
 
   Future<QuerySnapshot<Map<String, dynamic>>> getAllPersons(String uid) async{
     return await firestore.collection('users').doc(uid).collection('persons').get();
+  }
+
+
+  Future<DocumentSnapshot<Map<String,dynamic>>> getPersonDetails(String pid) async{
+    final uid = authService.value.currentUser!.uid;
+    return await firestore.collection('users').doc(uid).collection('persons').doc(pid).get();
   }
 }
