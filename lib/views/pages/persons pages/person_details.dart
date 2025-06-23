@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sanctuarai/services/person_service.dart';
+import 'package:sanctuarai/views/Widgets/person%20widgets/details_widget.dart';
+import 'package:sanctuarai/views/Widgets/person%20widgets/entries_widget.dart';
 
 class PersonDetails extends StatefulWidget {
   const PersonDetails({super.key, required this.pid});
@@ -15,61 +17,99 @@ class _PersonDetailsState extends State<PersonDetails> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Color(0xFF457b9d),
-      body: FutureBuilder(
-        future: personService.value.getPersonDetails(widget.pid),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
-          }
-          if (snapshot.hasError) {
-            return Center(child: Text('there is an error ${snapshot.error}'));
-          }
-          final person = snapshot.data!;
-          return CustomScrollView(
-            slivers: [
-              SliverAppBar(
-                expandedHeight: 200,
-                backgroundColor: Color(0xFF457b9d),
-                flexibleSpace: FlexibleSpaceBar(
+    return DefaultTabController(
+      length: 2,
+      child: Scaffold(
+        body: FutureBuilder(
+          future: personService.value.getPersonDetails(widget.pid),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Center(child: CircularProgressIndicator());
+            }
+            if (snapshot.hasError) {
+              return Center(child: Text('there is an error ${snapshot.error}'));
+            }
+            final person = snapshot.data!;
+            return CustomScrollView(
+              slivers: [
+                SliverAppBar(
+                  expandedHeight: 200,
+                  backgroundColor: Color(0xFF457b9d),
+                  flexibleSpace: FlexibleSpaceBar(
+                    background: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Center(
+                        child: CircleAvatar(
+                          backgroundColor: Colors.grey,
+                          radius: 70,
+                        ),
+                      ),
+                    ),
+                    titlePadding: EdgeInsets.symmetric(
+                      horizontal: 4,
+                      vertical: 4,
+                    ),
+                    title: Text(
+                      person['name'],
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 25,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    centerTitle: true,
+                  ),
+                  pinned: true,
+                  floating: true,
+                ),
 
-                  background: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Center(
-                      child: CircleAvatar(
-                        backgroundColor: Colors.grey,
-                        radius: 70,
+                SliverAppBar(
+                  automaticallyImplyLeading: false,
+
+                  backgroundColor: Color(0xFF457b9d),
+                  pinned: true,
+                  toolbarHeight: 5,
+                  bottom: PreferredSize(
+                    preferredSize: Size.fromHeight(31),
+                    child: Container(
+                      height: 36,
+                      child: const TabBar(
+                        tabs: [
+                          Tab(
+                            child: Text(
+                              "Details",
+                              style: TextStyle(fontSize: 18),
+                            ),
+                          ),
+                          Tab(
+                            child: Text(
+                              "Entries",
+                              style: TextStyle(fontSize: 18),
+                            ),
+                          ),
+                        ],
+                        labelColor: Colors.black,
+                        unselectedLabelColor: Colors.white,
+                        indicatorColor: Colors.white,
                       ),
                     ),
                   ),
                 ),
-              ),
-              SliverToBoxAdapter(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    buildButton("Details", 0),
-                    buildButton("Entries", 1),
-                  ],
-                ),
-              ),
-              SliverFillRemaining(
-                hasScrollBody: true,
-                child:  Container(
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.vertical(
-                      top: Radius.circular(30),
-                    ),
+                SliverFillRemaining(
+                  child: TabBarView(
+                    children: [
+                      DetailsWidget(
+                        gender: person['gender'],
+                        intro: person['intro'],
+                      ),
+                      EntriesWidget(),
+                    ],
                   ),
-                  child: IndexedStack(index: selectedIndex,children: [],),
                 ),
-
-              )
-            ],
-          );
-        },
+              ],
+            );
+          },
+        ),
       ),
     );
   }

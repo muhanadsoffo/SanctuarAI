@@ -56,6 +56,7 @@ class _PersonsPageState extends State<PersonsPage> {
                     ),
                   );
                 },
+                //Todo: make the container OpenContainer
                 child: Container(
                   padding: EdgeInsets.all(8),
                   decoration: BoxDecoration(
