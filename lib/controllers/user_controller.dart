@@ -8,7 +8,7 @@ class UserController {
   static final userController = UserController();
 
   //Todo: implement a function that updates the profile picture
-  Future<String?> editProfilePicture() async {
+  /* Future<String?> editProfilePicture() async {
     final picker = ImagePicker();
     final pickedFile = await picker.pickImage(source: ImageSource.gallery);
     final uid = authService.value.currentUser!.uid;
@@ -25,7 +25,7 @@ class UserController {
     } catch (e) {
       return "unknown error";
     }
-  }
+  } */
   //Todo: implement a function to update the bio
 Future<String?> updateUserBio({
     required String bio
