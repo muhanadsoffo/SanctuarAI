@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart' as path ;
 import 'package:sanctuarai/services/auth_service.dart';
 ValueNotifier<UserService> userService = ValueNotifier(UserService());
@@ -33,28 +32,20 @@ class UserService {
   }
 
   //Todo: implement a function to update the profile picture
-  Future<void> updateProfilePicture({
+  Future<String?> updateProfilePicture({
     required String uid,
+    required File imageFile,
   }) async {
-    final picker= ImagePicker();
-    final XFile? pickedFile= await picker.pickImage(source: ImageSource.gallery);
-    if(pickedFile == null) {
-      return ;
-    }
-    final file =File(pickedFile.path);
-    String extension = path.extension(file.path);
-
+    String extension = path.extension(imageFile.path);
     //here we are creating a folder named profile_pictures if it doesn't exist and creating a unique filename for the user's picture
     final ref = storage.ref().child('profile_pictures').child('$uid$extension');
-    final UploadTask uploadTask = ref.putFile(file);
-    await uploadTask;
+    await ref.putFile(imageFile);
     final imageUrl = await ref.getDownloadURL();
     await firestore.collection('users').doc(uid).update({
       'profilePicture': imageUrl,
     });
+    return imageUrl;
   }
-
-
 
   //Todo: implement a function to update the bio
 
