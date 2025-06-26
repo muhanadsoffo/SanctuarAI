@@ -4,51 +4,48 @@ import 'package:sanctuarai/services/auth_service.dart';
 import 'package:sanctuarai/views/pages/persons%20pages/persons_page.dart';
 import 'package:sanctuarai/views/pages/profile%20pages/profile_page.dart';
 
-class AppbarWidget extends StatelessWidget implements PreferredSizeWidget {
+class AppbarWidget extends StatelessWidget  {
   const AppbarWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return AppBar(
-      backgroundColor: Color(0xFF457b9d),
-      actions: [
-        IconButton(onPressed: () async{
-          final error = await AuthController.authController.logout();
-          if(error != null){
-
-            ScaffoldMessenger.of(
-              context,
-            ).showSnackBar(
-              SnackBar(content: Text(error),backgroundColor: Colors.red,),
-            );
-          }
-
-        }, icon: Icon(Icons.logout,color: Colors.white,)),IconButton(onPressed: () {
-          Navigator.push(context, MaterialPageRoute(builder: (context) {
-            return PersonsPage();
-          },));
-        }, icon: Icon(Icons.person))
-      ],
-      title: GestureDetector(
-        onTap: () {
-          Navigator.push(context, MaterialPageRoute(builder: (context) {
-            return ProfilePage();
-          },));
-        },
-        child: Row(
-          children: [
-
-            CircleAvatar(
-              radius: 25,
-              backgroundImage: AssetImage('assets/images/me.jpeg'),
+    return CustomScrollView(
+      slivers: [
+        SliverAppBar(
+          flexibleSpace: SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.all(4),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    children: [
+                      CircleAvatar(radius: 35),
+                      Text("Hey there", style: TextStyle(fontSize: 18)),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      IconButton(onPressed: () {}, icon: Icon(Icons.logout)),
+                    ],
+                  ),
+                ],
+              ),
             ),
-            SizedBox(width: 12,),
-            Text("Muhannad")
-          ],
+          ),
         ),
-      ),
+
+        SliverAppBar(
+          expandedHeight: 250,
+          flexibleSpace: FlexibleSpaceBar(
+            background: Row(
+              children: [IconButton(onPressed: () {}, icon: Icon(Icons.add))],
+            ),
+          ),
+        ),
+      ],
     );
   }
-  @override
-  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
+
+
 }
