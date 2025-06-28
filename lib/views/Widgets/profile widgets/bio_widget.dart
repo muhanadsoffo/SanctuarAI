@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:sanctuarai/controllers/user_controller.dart';
 import 'package:sanctuarai/services/auth_service.dart';
 import 'package:sanctuarai/services/user_service.dart';
 
@@ -38,13 +39,10 @@ class _BioWidgetState extends State<BioWidget> {
   }
 
   Future<void> saveBio() async {
-    final uid = authService.value.currentUser?.uid;
     final newBio = bioController.text;
-    if (uid != null && newBio.isNotEmpty) {
-      await FirebaseFirestore.instance
-          .collection('users')
-          .doc(uid)
-          .update({'bio': newBio});
+    final error = await UserController().updateUserBio(bio: newBio);
+    if (error == null) {
+
       setState(() {
         bio = newBio;
         isEditing = false;

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
@@ -53,10 +54,18 @@ Future<void> updateBio({
     required String uid,
   required String bio
 })async{
-    await FirebaseFirestore.instance.collection('users').doc(uid).update({
+    await firestore.collection('users').doc(uid).update({
       'bio' : bio
     });
 }
 
   //Todo: implement a function to update the name
+Future<void> updateName({
+    required String uid,
+    required String newName,
+})async {
+    await firestore.collection('users').doc(uid).update({
+      'name' : newName
+    });
+}
 }

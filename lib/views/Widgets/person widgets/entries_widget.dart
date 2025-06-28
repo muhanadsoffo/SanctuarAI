@@ -5,9 +5,31 @@ class EntriesWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return Stack(
       children: [
-        Text("Entries")
+        Align(
+          alignment: Alignment.bottomLeft,
+          child: Container(
+            height: 70,
+            color: Colors.white12,
+            padding: EdgeInsets.only(left: 10, bottom: 10, top: 10),
+            width: double.infinity,
+            child: Row(
+              children: [
+                Expanded(
+                  flex: 3,
+                  child: TextField(
+                    decoration: InputDecoration(hintText: "Write an Entry"),
+                  ),
+                ),
+                Expanded(
+                  flex: 1,
+                  child: IconButton(onPressed: () {}, icon: Icon(Icons.send)),
+                ),
+              ],
+            ),
+          ),
+        ),
       ],
     );
   }

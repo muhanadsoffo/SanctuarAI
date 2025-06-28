@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:sanctuarai/controllers/user_controller.dart';
 
 class UserName extends StatefulWidget {
   const UserName({super.key});
@@ -30,6 +31,7 @@ class _UserNameState extends State<UserName> {
     String name = nameController.text;
     if (name.isNotEmpty) {
       await FirebaseAuth.instance.currentUser?.updateDisplayName(name);
+      await UserController().updateUserName(name: name);
       setState(() {
         isEditing = false;
       });

@@ -33,8 +33,10 @@ class _PersonDetailsState extends State<PersonDetails> {
             return CustomScrollView(
               slivers: [
                 SliverAppBar(
+
                   expandedHeight: 200,
                   backgroundColor: Color(0xFF457b9d),
+
                   flexibleSpace: FlexibleSpaceBar(
                     background: Padding(
                       padding: const EdgeInsets.all(8.0),

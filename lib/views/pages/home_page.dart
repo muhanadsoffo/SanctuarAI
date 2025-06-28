@@ -21,7 +21,7 @@ class _HomePageState extends State<HomePage> {
       slivers: [
         SliverAppBar(
           backgroundColor: Color(0xFFC2E8C9),
-          pinned: true,
+          floating: true,
           flexibleSpace: SafeArea(
             child: Padding(
               padding: const EdgeInsets.all(4),
