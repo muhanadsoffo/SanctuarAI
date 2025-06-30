@@ -104,7 +104,7 @@ class _PersonDetailsState extends State<PersonDetails> {
                         gender: person['gender'],
                         intro: person['intro'],
                       ),
-                      EntriesWidget(),
+                      EntriesWidget(pid: person['pid']),
                     ],
                   ),
                 ),

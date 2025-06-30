@@ -9,7 +9,7 @@ class EntryController{
   Future<String?> createEntry({
     required String text,
     required String pid,
-    required int feeling,
+    required String feeling,
 
 }) async{
     final uid= authService.value.currentUser!.uid;

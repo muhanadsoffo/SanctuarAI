@@ -10,7 +10,7 @@ class EntriesService {
     required String uid,
     required String pid,
     required String text,
-    required int feeling,
+    required String feeling,
   }) async {
     final entryDoc =
         firestore
