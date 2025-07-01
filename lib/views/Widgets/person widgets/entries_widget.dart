@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sanctuarai/controllers/entry_controller.dart';
+import 'package:sanctuarai/views/Widgets/person%20widgets/all_entries_widget.dart';
 
 class EntriesWidget extends StatefulWidget {
   const EntriesWidget({super.key, required this.pid});
@@ -16,8 +17,9 @@ class _EntriesWidgetState extends State<EntriesWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
+    return Column(
       children: [
+        Expanded(child: AllEntriesWidget(pid: widget.pid)),
         Align(
           alignment: Alignment.bottomLeft,
           child: Container(

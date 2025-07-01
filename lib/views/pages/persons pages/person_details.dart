@@ -107,8 +107,10 @@ class _PersonDetailsState extends State<PersonDetails> {
                       EntriesWidget(pid: person['pid']),
                     ],
                   ),
+
                 ),
               ],
+
             );
           },
         ),

@@ -29,17 +29,18 @@ class EntriesService {
   }
 
 
-  Future<QuerySnapshot<Map<String, dynamic>>> getAllEntries({
+  Stream<QuerySnapshot<Map<String, dynamic>>> getAllEntries({
     required String uid,
     required String pid,
-  }) async {
-    return await firestore
+  })  {
+    return firestore
         .collection('users')
         .doc(uid)
         .collection('persons')
         .doc(pid)
         .collection('entries')
-        .get();
+        .orderBy('date',descending: true)
+        .snapshots();
   }
 
 
