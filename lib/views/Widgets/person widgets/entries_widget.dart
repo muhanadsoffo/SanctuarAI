@@ -17,9 +17,9 @@ class _EntriesWidgetState extends State<EntriesWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return Stack(
       children: [
-        Expanded(child: AllEntriesWidget(pid: widget.pid)),
+         AllEntriesWidget(pid: widget.pid),
         Align(
           alignment: Alignment.bottomLeft,
           child: Container(
@@ -32,7 +32,7 @@ class _EntriesWidgetState extends State<EntriesWidget> {
                 Expanded(
                   flex: 5,
                   child: TextField(
-                    maxLength: 120,
+                    maxLength: 200,
                     controller: controller,
                     decoration: InputDecoration(hintText: "Write an Entry"),
                   ),
