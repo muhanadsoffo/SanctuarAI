@@ -20,7 +20,7 @@ class _HomePageState extends State<HomePage> {
     return CustomScrollView(
       slivers: [
         SliverAppBar(
-          backgroundColor: Color(0xFFC2E8C9),
+          backgroundColor: Color(0xFFABC7D9),
           floating: true,
           flexibleSpace: SafeArea(
             child: Padding(
@@ -73,7 +73,7 @@ class _HomePageState extends State<HomePage> {
               bottomRight: Radius.circular(40),
             ),
           ),
-          backgroundColor: Color(0xFFC2E8C9),
+          backgroundColor: Color(0xFFABC7D9),
           flexibleSpace: FlexibleSpaceBar(
             background: Padding(
               padding: const EdgeInsets.all(8.0),

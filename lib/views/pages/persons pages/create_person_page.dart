@@ -16,8 +16,8 @@ class _CreatePersonPageState extends State<CreatePersonPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
-      appBar: AppBar(title: Text("New Person"),),
+backgroundColor: Color(0xFFF1F6F9),
+      appBar: AppBar(title: Text("New Person"),backgroundColor: Color(0xFFF1F6F9),),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(8.0),

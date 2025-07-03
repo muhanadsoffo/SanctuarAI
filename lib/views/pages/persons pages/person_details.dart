@@ -35,7 +35,7 @@ class _PersonDetailsState extends State<PersonDetails> {
                 SliverAppBar(
 
                   expandedHeight: 200,
-                  backgroundColor: Color(0xFF457b9d),
+                  backgroundColor: Color(0xFFABC7D9),
 
                   flexibleSpace: FlexibleSpaceBar(
                     background: Padding(
@@ -54,7 +54,6 @@ class _PersonDetailsState extends State<PersonDetails> {
                     title: Text(
                       person['name'],
                       style: TextStyle(
-                        color: Colors.white,
                         fontSize: 25,
                         fontWeight: FontWeight.bold,
                       ),
@@ -68,7 +67,7 @@ class _PersonDetailsState extends State<PersonDetails> {
                 SliverAppBar(
                   automaticallyImplyLeading: false,
 
-                  backgroundColor: Color(0xFF457b9d),
+                  backgroundColor: Color(0xFFABC7D9),
                   pinned: true,
                   toolbarHeight: 5,
                   bottom: PreferredSize(

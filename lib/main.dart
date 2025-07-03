@@ -27,7 +27,7 @@ class _MyAppState extends State<MyApp> {
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(colorScheme: ColorScheme.fromSeed(seedColor: Colors.lightBlueAccent)),
+      theme: ThemeData(colorScheme: ColorScheme.fromSeed(seedColor: Color(0xFFE2EDF3))),
       home: AuthLayout(),
     );
   }

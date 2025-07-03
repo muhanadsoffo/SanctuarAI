@@ -24,7 +24,7 @@ class _EntriesWidgetState extends State<EntriesWidget> {
           alignment: Alignment.bottomLeft,
           child: Container(
             height: 70,
-            color: Colors.orangeAccent,
+            color: Color(0xFFABC7D9),
             padding: EdgeInsets.only(left: 10, bottom: 10, top: 10),
             width: double.infinity,
             child: Row(
