@@ -44,6 +44,8 @@ dependencies:
   path: ^1.9.1
   http: ^1.4.0
   convex_bottom_bar: ^3.2.0
+  flutter_launcher_icons: ^0.14.4
+  flutter_native_splash: ^2.4.6
 
 dev_dependencies:
   flutter_test:
@@ -98,3 +100,12 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package
+flutter_native_splash:
+  color: "#FFFFFF"
+  image: assets/images/bg.png
+  android: true
+  ios: true
+  fullscreen: true
+  android_12:
+    color: "#FFFFFF"
+    image: assets/images/bg.png
