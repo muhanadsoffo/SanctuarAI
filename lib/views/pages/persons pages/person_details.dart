@@ -35,7 +35,7 @@ class _PersonDetailsState extends State<PersonDetails> {
                 SliverAppBar(
 
                   expandedHeight: 200,
-                  backgroundColor: Color(0xFFABC7D9),
+                  backgroundColor: Color(0xFF65BBC8),
 
                   flexibleSpace: FlexibleSpaceBar(
                     background: Padding(
@@ -67,7 +67,7 @@ class _PersonDetailsState extends State<PersonDetails> {
                 SliverAppBar(
                   automaticallyImplyLeading: false,
 
-                  backgroundColor: Color(0xFFABC7D9),
+                  backgroundColor: Color(0xFF65BBC8),
                   pinned: true,
                   toolbarHeight: 5,
                   bottom: PreferredSize(

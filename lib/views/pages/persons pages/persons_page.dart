@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:sanctuarai/services/auth_service.dart';
 import 'package:sanctuarai/services/person_service.dart';
+import 'package:sanctuarai/views/Widgets/person%20widgets/flip_container_widget.dart';
 import 'package:sanctuarai/views/pages/persons%20pages/person_details.dart';
 
 class PersonsPage extends StatefulWidget {
@@ -46,81 +47,7 @@ class _PersonsPageState extends State<PersonsPage> {
             itemBuilder: (context, index) {
               final data = persons[index].data();
               final pid = data['pid'];
-              return GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) {
-                        return PersonDetails(pid: pid,);
-                      },
-                    ),
-                  );
-                },
-                //Todo: make the container OpenContainer
-                child: Container(
-                  padding: EdgeInsets.all(8),
-                  decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.6),
-                    borderRadius: BorderRadius.circular(8),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.withOpacity(0.9),
-                        blurRadius: 4,
-                        spreadRadius: 0.8,
-                      ),
-                    ],
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-
-                    children: [
-                      Row(
-                        children: [
-                          CircleAvatar(
-                            backgroundColor: Colors.grey,
-                            radius: 60,
-                          ),
-                          SizedBox(width: 30),
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-
-                              children: [
-                                SizedBox(height: 7),
-                                Text(
-                                  'Name: ${data['name']}',
-                                  style: const TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                SizedBox(height: 7),
-                                Text(
-                                  'Gender: ${data['gender']}',
-                                  style: const TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                SizedBox(height: 7),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: 7),
-                      Text(
-                        'Introduction:\n ${data['intro']}',
-                        style: const TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              );
+              return FlipContainerWidget(data: data,);
             },
           );
         },

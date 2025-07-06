@@ -14,7 +14,7 @@ class _WidgetTreeState extends State<WidgetTree> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Color(0xFFF1F6F9),
+
       body: HomePage(),
 
     );
