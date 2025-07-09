@@ -46,7 +46,6 @@ class _PersonsPageState extends State<PersonsPage> {
             ),
             itemBuilder: (context, index) {
               final data = persons[index].data();
-              final pid = data['pid'];
               return FlipContainerWidget(data: data,);
             },
           );

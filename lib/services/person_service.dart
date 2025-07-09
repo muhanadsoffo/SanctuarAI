@@ -12,6 +12,9 @@ class PersonService {
     required String gender,
     required String intro,
     String? personPicture,
+    String? summary,
+    String? aiResponse,
+    DateTime? lastSummarizedAt
   }) async {
     final personDoc =
         firestore.collection('users').doc(uid).collection('persons').doc();
@@ -22,6 +25,9 @@ class PersonService {
       'gender': gender,
       'intro': intro,
       'personPicture': personPicture ?? "",
+      'summary' : summary ?? "",
+      'aiResponse' : aiResponse ?? "",
+      'lastSummarizedAt' : lastSummarizedAt ?? ""
     });
   }
 
@@ -39,4 +45,5 @@ class PersonService {
      return await firestore.collection('users').doc(uid).collection('persons').doc(pid).delete();
 
   }
+
 }
