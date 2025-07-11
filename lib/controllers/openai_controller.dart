@@ -4,6 +4,8 @@ import 'package:sanctuarai/services/openai_service.dart';
 import 'package:sanctuarai/services/person_service.dart';
 
 class OpenaiController {
+  static final openaiController= OpenaiController();
+
   final uid = authService.value.currentUser!.uid;
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
 

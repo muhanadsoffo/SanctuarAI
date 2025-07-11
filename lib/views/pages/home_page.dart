@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sanctuarai/views/Widgets/appbar_widget.dart';
+import 'package:sanctuarai/views/Widgets/home%20widgets/sliders_widget.dart';
 import 'package:sanctuarai/views/Widgets/navbar_widget.dart';
 import 'package:sanctuarai/views/pages/persons%20pages/create_person_page.dart';
 import 'package:sanctuarai/views/pages/persons%20pages/persons_page.dart';
@@ -30,9 +31,14 @@ class _HomePageState extends State<HomePage> {
                 children: [
                   GestureDetector(
                     onTap: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) {
-                        return ProfilePage();
-                      },));
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) {
+                            return ProfilePage();
+                          },
+                        ),
+                      );
                     },
                     child: Row(
                       children: [
@@ -43,18 +49,21 @@ class _HomePageState extends State<HomePage> {
                   ),
                   Row(
                     children: [
-                      IconButton(onPressed: () async{
-                        final error = await AuthController.authController.logout();
-                        if(error != null){
-
-                          ScaffoldMessenger.of(
-                            context,
-                          ).showSnackBar(
-                            SnackBar(content: Text(error),backgroundColor: Colors.red,),
-                          );
-                        }
-
-                      }, icon: Icon(Icons.logout)),
+                      IconButton(
+                        onPressed: () async {
+                          final error =
+                              await AuthController.authController.logout();
+                          if (error != null) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(error),
+                                backgroundColor: Colors.red,
+                              ),
+                            );
+                          }
+                        },
+                        icon: Icon(Icons.logout),
+                      ),
                     ],
                   ),
                 ],
@@ -95,9 +104,14 @@ class _HomePageState extends State<HomePage> {
                             radius: 30,
                             child: IconButton(
                               onPressed: () {
-                                Navigator.push(context,  MaterialPageRoute(builder: (context) {
-                                  return CreatePersonPage();
-                                },));
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) {
+                                      return CreatePersonPage();
+                                    },
+                                  ),
+                                );
                               },
                               icon: Icon(Icons.add),
                             ),
@@ -112,9 +126,16 @@ class _HomePageState extends State<HomePage> {
                             backgroundColor: Colors.white,
                             radius: 30,
                             child: IconButton(
-                              onPressed: () {Navigator.push(context,  MaterialPageRoute(builder: (context) {
-                                return PersonsPage();
-                              },));},
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) {
+                                      return PersonsPage();
+                                    },
+                                  ),
+                                );
+                              },
                               icon: Icon(Icons.person),
                             ),
                           ),
@@ -129,7 +150,13 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
         ),
-        SliverFillRemaining(child: Column(children: [Text("Here is the rest of the home page",style: TextStyle(fontSize: 20),)],),),
+        SliverToBoxAdapter(
+          child: Padding(
+            padding: const EdgeInsets.only(top: 8.0),
+            child: SlidersWidget(),
+          ),
+        ),
+        SliverFillRemaining()
       ],
     );
   }
