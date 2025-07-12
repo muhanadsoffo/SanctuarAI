@@ -62,8 +62,11 @@ class _SlidersWidgetState extends State<SlidersWidget> {
         height: 200,
         autoPlay: true,
 
-        autoPlayInterval: Duration(seconds: 5),
-        autoPlayAnimationDuration: Duration(seconds: 1),
+        autoPlayInterval: Duration(seconds: 3),
+        autoPlayAnimationDuration: Duration(milliseconds: 700 ),
+        enlargeCenterPage: true,
+        enlargeFactor: 0.25,
+
       ),
     );
   }
@@ -74,7 +77,8 @@ class _SlidersWidgetState extends State<SlidersWidget> {
       'desc':
           "With SenctuarAI you can keep track of how people affect your mentality",
       'gradient': LinearGradient(
-        colors: [Color(0xFF00C6FF), Color(0xFF0072FF)],
+        colors: [Color(0xFFe2afff),
+          Color(0xFFc0fdff)],
       ),
       'icon': Icons.favorite,
     },
@@ -82,7 +86,8 @@ class _SlidersWidgetState extends State<SlidersWidget> {
       'title': "Sanctuary ",
       'desc': "This is your sacred place where you can be real and safe",
       'gradient': LinearGradient(
-        colors: [Color(0xFFFF6FD8), Color(0xFFFFB86C)],
+        colors: [Color(0xFFecf39e),
+          Color(0xFFb7e4c7)],
       ),
       'icon': Icons.safety_check,
     },
@@ -91,7 +96,8 @@ class _SlidersWidgetState extends State<SlidersWidget> {
       'desc':
           "Write entries and receive advices that helps your growth as person",
       'gradient': LinearGradient(
-        colors: [Color(0xFF00C6FF), Color(0xFF0072FF)],
+        colors: [Color(0xFF00b4d8),
+          Color(0xFFcaf0f8)],
       ),
       'icon': Icons.show_chart,
     },

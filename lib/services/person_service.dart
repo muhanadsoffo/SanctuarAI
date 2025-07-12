@@ -2,10 +2,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:sanctuarai/services/auth_service.dart';
+
 ValueNotifier<PersonService> personService = ValueNotifier(PersonService());
+
 class PersonService {
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
   final uid = authService.value.currentUser!.uid;
+
   Future<void> createNewPerson({
     required String uid,
     required String name,
@@ -13,37 +16,69 @@ class PersonService {
     required String intro,
     String? personPicture,
     String? summary,
-    String? aiResponse,
-    DateTime? lastSummarizedAt
+    String? advice,
+    DateTime? lastSummarizedAt,
   }) async {
     final personDoc =
         firestore.collection('users').doc(uid).collection('persons').doc();
     await personDoc.set({
-      'pid' : personDoc.id,
+      'pid': personDoc.id,
       'uid': uid,
       'name': name,
       'gender': gender,
       'intro': intro,
       'personPicture': personPicture ?? "",
-      'summary' : summary ?? "",
-      'aiResponse' : aiResponse ?? "",
-      'lastSummarizedAt' : lastSummarizedAt ?? ""
+      'summary': summary ?? "",
+      'advice': advice ?? "",
+      'lastSummarizedAt': lastSummarizedAt ?? "",
     });
   }
 
-  Future<QuerySnapshot<Map<String, dynamic>>> getAllPersons(String uid) async{
-    return await firestore.collection('users').doc(uid).collection('persons').get();
+  Future<QuerySnapshot<Map<String, dynamic>>> getAllPersons(String uid) async {
+    return await firestore
+        .collection('users')
+        .doc(uid)
+        .collection('persons')
+        .get();
   }
 
-
-  Future<DocumentSnapshot<Map<String,dynamic>>> getPersonDetails(String pid) async{
-
-    return await firestore.collection('users').doc(uid).collection('persons').doc(pid).get();
+  Future<DocumentSnapshot<Map<String, dynamic>>> getPersonDetails(
+    String pid,
+  ) async {
+    return await firestore
+        .collection('users')
+        .doc(uid)
+        .collection('persons')
+        .doc(pid)
+        .get();
   }
 
-  Future<void> deletePerson(String pid) async{
-     return await firestore.collection('users').doc(uid).collection('persons').doc(pid).delete();
-
+  Future<void> deletePerson(String pid) async {
+    return await firestore
+        .collection('users')
+        .doc(uid)
+        .collection('persons')
+        .doc(pid)
+        .delete();
   }
 
+  Future<void> updateOnResponse({
+    required String summary,
+    required String advice,
+    required String pid
+
+  }) async {
+    await firestore
+        .collection('users')
+        .doc(uid)
+        .collection('persons')
+        .doc(pid)
+        .update({
+      'aiResponse': {
+        'summary':summary,
+        'advice':advice,
+        'lastSummarizedAt': Timestamp.now(),
+      }
+    });
+  }
 }

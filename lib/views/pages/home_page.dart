@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sanctuarai/views/Widgets/appbar_widget.dart';
+import 'package:sanctuarai/views/Widgets/home%20widgets/most_interacted_widget.dart';
 import 'package:sanctuarai/views/Widgets/home%20widgets/sliders_widget.dart';
 import 'package:sanctuarai/views/Widgets/navbar_widget.dart';
 import 'package:sanctuarai/views/pages/persons%20pages/create_person_page.dart';
@@ -78,8 +79,8 @@ class _HomePageState extends State<HomePage> {
           toolbarHeight: 150,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.only(
-              bottomLeft: Radius.circular(40),
-              bottomRight: Radius.circular(40),
+              bottomLeft: Radius.circular(20),
+              bottomRight: Radius.circular(20),
             ),
           ),
           backgroundColor: Color(0xFF65BBC8),
@@ -156,6 +157,8 @@ class _HomePageState extends State<HomePage> {
             child: SlidersWidget(),
           ),
         ),
+
+        SliverToBoxAdapter(child: MostInteractedWidget(),),
         SliverFillRemaining()
       ],
     );
