@@ -21,7 +21,7 @@ class _PersonDetailsState extends State<PersonDetails> {
       length: 2,
       child: Scaffold(
         body: FutureBuilder(
-          future: personService.value.getPersonDetails(widget.pid),
+          future: personService.value.getPersonDetails(pid: widget.pid),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return Center(child: CircularProgressIndicator());

@@ -11,7 +11,7 @@ class OpenaiController {
 
   Future<String?> sendForFirstTime({required String pid}) async {
     try {
-      final personDetails = await personService.value.getPersonDetails(pid);
+      final personDetails = await personService.value.getPersonDetails(pid: pid);
       final name = personDetails['name'];
       final intro = personDetails['intro'];
       final newEntries =
@@ -63,7 +63,7 @@ If the entries seem random or irrelevant, respond with:
 
   Future<String?> followUp({required String pid}) async {
     try {
-      final personDetails = await personService.value.getPersonDetails(pid);
+      final personDetails = await personService.value.getPersonDetails(pid: pid);
       final lastSummaryTime = personDetails['lastSummarizedAt'];
       final previousSummary = personDetails['summary'];
       final newEntries =

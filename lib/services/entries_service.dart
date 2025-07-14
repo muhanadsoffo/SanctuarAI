@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:sanctuarai/services/person_service.dart';
 
 ValueNotifier<EntriesService> entryService = ValueNotifier(EntriesService());
 class EntriesService {
@@ -26,6 +27,7 @@ class EntriesService {
       'date': DateTime.now(),
       'feeling': feeling,
     });
+    await personService.value.updateEntryNumber(pid: pid,number: 1);
   }
 
 
@@ -50,7 +52,7 @@ class EntriesService {
     required String pid,
     required String eid,
   }) async {
-    return await firestore
+     await firestore
         .collection('users')
         .doc(uid)
         .collection('persons')
@@ -58,5 +60,6 @@ class EntriesService {
         .collection('entries')
         .doc(eid)
         .delete();
+     await personService.value.updateEntryNumber(pid: pid,number: -1);
   }
 }

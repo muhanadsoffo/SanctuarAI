@@ -18,6 +18,7 @@ class PersonService {
     String? summary,
     String? advice,
     DateTime? lastSummarizedAt,
+    int? entryNumber,
   }) async {
     final personDoc =
         firestore.collection('users').doc(uid).collection('persons').doc();
@@ -31,6 +32,7 @@ class PersonService {
       'summary': summary ?? "",
       'advice': advice ?? "",
       'lastSummarizedAt': lastSummarizedAt ?? "",
+      'entryNumber': entryNumber ?? 0,
     });
   }
 
@@ -42,9 +44,10 @@ class PersonService {
         .get();
   }
 
-  Future<DocumentSnapshot<Map<String, dynamic>>> getPersonDetails(
-    String pid,
-  ) async {
+  Future<DocumentSnapshot<Map<String, dynamic>>> getPersonDetails({
+    required String pid,
+    String? uid
+  }) async {
     return await firestore
         .collection('users')
         .doc(uid)
@@ -65,8 +68,7 @@ class PersonService {
   Future<void> updateOnResponse({
     required String summary,
     required String advice,
-    required String pid
-
+    required String pid,
   }) async {
     await firestore
         .collection('users')
@@ -74,11 +76,35 @@ class PersonService {
         .collection('persons')
         .doc(pid)
         .update({
-      'aiResponse': {
-        'summary':summary,
-        'advice':advice,
-        'lastSummarizedAt': Timestamp.now(),
-      }
-    });
+          'aiResponse': {
+            'summary': summary,
+            'advice': advice,
+            'lastSummarizedAt': Timestamp.now(),
+          },
+        });
+  }
+
+  Future<void> updateEntryNumber({
+    required String pid,
+    required int number,
+  }) async {
+    await firestore
+        .collection('users')
+        .doc(uid)
+        .collection('persons')
+        .doc(pid)
+        .update({'entryNumber': FieldValue.increment(number)});
+  }
+
+  Future<QuerySnapshot<Map<String, dynamic>>> getPersonsWithMostEntries({
+    required String uid,
+  }) async {
+    return await firestore
+        .collection('users')
+        .doc(uid)
+        .collection('persons')
+        .orderBy('entryNumber', descending: true)
+        .limit(5)
+        .get();
   }
 }
