@@ -121,9 +121,9 @@ class _FlipContainerWidgetState extends State<FlipContainerWidget> with SingleTi
             ],
           ),
           SizedBox(height: 15),
-          ElevatedButton(onPressed: () {
-            Navigator.push(context, MaterialPageRoute(builder: (context) {
-              return PersonDetails(pid: widget.data['pid'],);
+          ElevatedButton(onPressed: () async{
+           await Navigator.push(context, MaterialPageRoute(builder: (context)  {
+              return  PersonDetails(pid: widget.data['pid'],);
             },));
           }, child: Text("See details"))
         ],

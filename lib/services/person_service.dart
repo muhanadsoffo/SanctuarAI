@@ -46,7 +46,7 @@ class PersonService {
 
   Future<DocumentSnapshot<Map<String, dynamic>>> getPersonDetails({
     required String pid,
-    String? uid
+
   }) async {
     return await firestore
         .collection('users')
@@ -96,15 +96,15 @@ class PersonService {
         .update({'entryNumber': FieldValue.increment(number)});
   }
 
-  Future<QuerySnapshot<Map<String, dynamic>>> getPersonsWithMostEntries({
+  Stream<QuerySnapshot<Map<String, dynamic>>> getPersonsWithMostEntries({
     required String uid,
-  }) async {
-    return await firestore
+  })  {
+    return  firestore
         .collection('users')
         .doc(uid)
         .collection('persons')
         .orderBy('entryNumber', descending: true)
         .limit(5)
-        .get();
+        .snapshots();
   }
 }
