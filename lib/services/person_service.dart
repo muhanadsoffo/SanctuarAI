@@ -29,10 +29,12 @@ class PersonService {
       'gender': gender,
       'intro': intro,
       'personPicture': personPicture ?? "",
-      'summary': summary ?? "",
-      'advice': advice ?? "",
-      'lastSummarizedAt': lastSummarizedAt ?? "",
       'entryNumber': entryNumber ?? 0,
+      "aiResponse": {
+        "advice": advice ,
+        "summary": summary ,
+        'lastSummarizedAt': lastSummarizedAt ?? "",
+      }
     });
   }
 
@@ -103,6 +105,7 @@ class PersonService {
         .collection('users')
         .doc(uid)
         .collection('persons')
+        .where('entryNumber',isGreaterThan: 0)
         .orderBy('entryNumber', descending: true)
         .limit(5)
         .snapshots();

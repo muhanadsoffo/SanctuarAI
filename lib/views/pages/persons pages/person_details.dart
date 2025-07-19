@@ -100,8 +100,7 @@ class _PersonDetailsState extends State<PersonDetails> {
                   child: TabBarView(
                     children: [
                       DetailsWidget(
-                        gender: person['gender'],
-                        intro: person['intro'],
+                        person: person
                       ),
                       EntriesWidget(pid: person['pid']),
                     ],

@@ -64,8 +64,8 @@ If the entries seem random or irrelevant, respond with:
   Future<String?> followUp({required String pid}) async {
     try {
       final personDetails = await personService.value.getPersonDetails(pid: pid);
-      final lastSummaryTime = personDetails['lastSummarizedAt'];
-      final previousSummary = personDetails['summary'];
+      final Timestamp  lastSummaryTime = personDetails['aiResponse.lastSummarizedAt'];
+      final previousSummary = personDetails['aiResponse.summary'];
       final newEntries =
       await firestore
           .collection('users')
