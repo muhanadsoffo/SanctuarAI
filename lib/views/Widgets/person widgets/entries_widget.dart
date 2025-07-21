@@ -37,6 +37,7 @@ class _EntriesWidgetState extends State<EntriesWidget> {
                     decoration: InputDecoration(hintText: "Write an Entry"),
                   ),
                 ),
+                SizedBox(width: 4,),
                 Expanded(
                   flex: 2,
                   child: DropdownButtonFormField(

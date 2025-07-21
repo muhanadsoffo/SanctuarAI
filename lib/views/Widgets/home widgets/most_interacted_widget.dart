@@ -36,7 +36,7 @@ class _MostInteractedWidgetState extends State<MostInteractedWidget> {
                 return emptyList();
               }
               return Container(
-                height: 150,
+                height: 200,
                 child: ListView.separated(
                   separatorBuilder: (context, index) => SizedBox(width: 12),
                   scrollDirection: Axis.horizontal,
@@ -46,23 +46,30 @@ class _MostInteractedWidgetState extends State<MostInteractedWidget> {
                     return Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
-                        color: Color(0xFFabc7d9),
+
                       ),
-                      height: 150,
-                      width: 130,
-                      child: Column(
-                        children: [
-                          SizedBox(height: 10),
-                          CircleAvatar(
-                            radius: 40,
-                            backgroundColor: Colors.grey,
-                          ),
-                          SizedBox(height: 10),
-                          Text(
-                            person['name'] ?? null,
-                            style: TextStyle(fontSize: 20),
-                          ),
-                        ],
+                      height: 160,
+                      width: 145,
+                      child: Card(
+                         shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                    ),
+                    elevation: 4,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+
+                            CircleAvatar(
+                              radius: 50,
+                              backgroundColor: Colors.grey,
+                            ),
+
+                            Text(
+                              person['name'] ?? null,
+                              style: TextStyle(fontSize: 20),
+                            ),
+                          ],
+                        ),
                       ),
                     );
                   },

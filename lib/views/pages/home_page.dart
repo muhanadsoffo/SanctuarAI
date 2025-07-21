@@ -141,7 +141,7 @@ class _HomePageState extends State<HomePage> {
                             ),
                           ),
                           SizedBox(height: 8),
-                          Text("Persons list"),
+                          Text("People list"),
                         ],
                       ),
                     ],
