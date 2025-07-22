@@ -16,8 +16,8 @@ class _PersonsPageState extends State<PersonsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Color(0xFFF1F6F9),
-      appBar: AppBar(backgroundColor: Color(0xFFF1F6F9)),
+
+      appBar: AppBar(),
       body: FutureBuilder<QuerySnapshot<Map<String, dynamic>>>(
         future: personService.value.getAllPersons(
           authService.value.currentUser!.uid,

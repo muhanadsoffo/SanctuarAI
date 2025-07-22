@@ -79,75 +79,86 @@ class _FlipContainerWidgetState extends State<FlipContainerWidget> with SingleTi
 
   Widget _buildFrontCard() {
     return Container(
-      padding: EdgeInsets.all(8),
-      decoration: BoxDecoration(
-        color: Color(0xFFD4E4ED),
+      width: double.infinity,
 
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: Card(
+        elevation: 4,
+        
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
 
-        children: [
-          Row(
             children: [
-              CircleAvatar(backgroundColor: Colors.grey, radius: 60),
-              SizedBox(width: 30),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+              Row(
+                children: [
+                  CircleAvatar(backgroundColor: Colors.grey, radius: 60),
+                  SizedBox(width: 30),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
 
-                  children: [
-                    SizedBox(height: 7),
-                    Text(
-                      'Name: ${widget.data['name']}',
-                      style: const TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
+                      children: [
+                        SizedBox(height: 7),
+                        Text(
+                          'Name: ${widget.data['name']}',
+                          style: const TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        SizedBox(height: 7),
+                        Text(
+                          'Gender: ${widget.data['gender']}',
+                          style: const TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        SizedBox(height: 7),
+                      ],
                     ),
-                    SizedBox(height: 7),
-                    Text(
-                      'Gender: ${widget.data['gender']}',
-                      style: const TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    SizedBox(height: 7),
-                  ],
-                ),
+                  ),
+                ],
               ),
+              SizedBox(height: 15),
+              ElevatedButton(onPressed: () async{
+               await Navigator.push(context, MaterialPageRoute(builder: (context)  {
+                  return  PersonDetails(pid: widget.data['pid'],);
+                },));
+              }, child: Text("See details"))
             ],
           ),
-          SizedBox(height: 15),
-          ElevatedButton(onPressed: () async{
-           await Navigator.push(context, MaterialPageRoute(builder: (context)  {
-              return  PersonDetails(pid: widget.data['pid'],);
-            },));
-          }, child: Text("See details"))
-        ],
+        ),
       ),
     );
   }
 
   Widget _buildBackCard() {
     return Container(
-      padding: EdgeInsets.all(8),
-      decoration: BoxDecoration(
-        color: Color(0xFFD4E4ED),
 
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: Card(
 
-        children: [
-          Text(
-            'Introduction:\n ${widget.data['intro']}',
-            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+        elevation: 4,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+
+            children: [
+              Text(
+                'Introduction:\n ${widget.data['intro']}',
+                style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }

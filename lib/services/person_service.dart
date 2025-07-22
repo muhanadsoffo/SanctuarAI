@@ -7,7 +7,7 @@ ValueNotifier<PersonService> personService = ValueNotifier(PersonService());
 
 class PersonService {
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
-  final uid = authService.value.currentUser!.uid;
+
 
   Future<void> createNewPerson({
     required String uid,
@@ -20,8 +20,10 @@ class PersonService {
     DateTime? lastSummarizedAt,
     int? entryNumber,
   }) async {
+    final uid = authService.value.currentUser!.uid;
     final personDoc =
         firestore.collection('users').doc(uid).collection('persons').doc();
+
     await personDoc.set({
       'pid': personDoc.id,
       'uid': uid,
@@ -39,6 +41,7 @@ class PersonService {
   }
 
   Future<QuerySnapshot<Map<String, dynamic>>> getAllPersons(String uid) async {
+    final uid = authService.value.currentUser!.uid;
     return await firestore
         .collection('users')
         .doc(uid)
@@ -50,6 +53,7 @@ class PersonService {
     required String pid,
 
   }) async {
+    final uid = authService.value.currentUser!.uid;
     return await firestore
         .collection('users')
         .doc(uid)
@@ -59,6 +63,7 @@ class PersonService {
   }
 
   Future<void> deletePerson(String pid) async {
+    final uid = authService.value.currentUser!.uid;
     return await firestore
         .collection('users')
         .doc(uid)
@@ -72,6 +77,7 @@ class PersonService {
     required String advice,
     required String pid,
   }) async {
+    final uid = authService.value.currentUser!.uid;
     await firestore
         .collection('users')
         .doc(uid)
@@ -90,6 +96,7 @@ class PersonService {
     required String pid,
     required int number,
   }) async {
+    final uid = authService.value.currentUser!.uid;
     await firestore
         .collection('users')
         .doc(uid)
@@ -101,6 +108,7 @@ class PersonService {
   Stream<QuerySnapshot<Map<String, dynamic>>> getPersonsWithMostEntries({
     required String uid,
   })  {
+    final uid = authService.value.currentUser!.uid;
     return  firestore
         .collection('users')
         .doc(uid)
