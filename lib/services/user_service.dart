@@ -1,11 +1,13 @@
+import 'dart:convert';
 import 'dart:io';
-
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:path/path.dart' as path ;
+import 'package:http/http.dart' as http;
+import 'package:path/path.dart' as path;
 import 'package:sanctuarai/services/auth_service.dart';
+
 ValueNotifier<UserService> userService = ValueNotifier(UserService());
 
 class UserService {
@@ -37,35 +39,41 @@ class UserService {
     required String uid,
     required File imageFile,
   }) async {
-    String extension = path.extension(imageFile.path);
-    //here we are creating a folder named profile_pictures if it doesn't exist and creating a unique filename for the user's picture
-    final ref = storage.ref().child('profile_pictures').child('$uid$extension');
-    await ref.putFile(imageFile);
-    final imageUrl = await ref.getDownloadURL();
-    await firestore.collection('users').doc(uid).update({
-      'profilePicture': imageUrl,
-    });
-    return imageUrl;
+    final url = Uri.parse('https://api.cloudinary.com/v1_1/dnbyfymlx/upload');
+    final request = http.MultipartRequest('POST', url);
+    request.fields['upload_preset'] = 'SanctuarAI';
+    request.fields['folder'] = 'users';
+
+
+    request.files.add(
+      await http.MultipartFile.fromPath('file', imageFile.path),
+    );
+    final response = await request.send();
+    if (response.statusCode == 200) {
+      final responseData = await response.stream.toBytes();
+      final responseString = String.fromCharCodes(responseData);
+      final jsonMap = jsonDecode(responseString);
+      firestore.collection('users').doc(uid).update({
+        'profilePicture': jsonMap['secure_url'],
+      });
+      return jsonMap['secure_url'];
+    } else {
+      print("failed to uploaaaaaaaad : ${response.statusCode}");
+      return null;
+    }
   }
 
   //Todo: implement a function to update the bio
 
-Future<void> updateBio({
-    required String uid,
-  required String bio
-})async{
-    await firestore.collection('users').doc(uid).update({
-      'bio' : bio
-    });
-}
+  Future<void> updateBio({required String uid, required String bio}) async {
+    await firestore.collection('users').doc(uid).update({'bio': bio});
+  }
 
   //Todo: implement a function to update the name
-Future<void> updateName({
+  Future<void> updateName({
     required String uid,
     required String newName,
-})async {
-    await firestore.collection('users').doc(uid).update({
-      'name' : newName
-    });
-}
+  }) async {
+    await firestore.collection('users').doc(uid).update({'name': newName});
+  }
 }

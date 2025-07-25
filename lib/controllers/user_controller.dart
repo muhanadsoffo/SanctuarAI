@@ -10,6 +10,7 @@ class UserController {
 
   //Todo: implement a function that updates the profile picture
   Future<String?> editProfilePicture() async {
+    final uid = authService.value.currentUser!.uid;
     final picker = ImagePicker();
     final pickedFile = await picker.pickImage(source: ImageSource.gallery);
 
