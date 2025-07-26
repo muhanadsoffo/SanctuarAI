@@ -43,8 +43,7 @@ class _HomePageState extends State<HomePage> {
                     },
                     child: Row(
                       children: [
-                        CircleAvatar(radius: 35),
-                        Text("Hey there", style: TextStyle(fontSize: 18)),
+                        AppbarWidget()
                       ],
                     ),
                   ),

@@ -30,7 +30,7 @@ class UserService {
     });
   }
 
-  Future<DocumentSnapshot> getUserdata(String uid) async {
+  Future<DocumentSnapshot<Map<String, dynamic>>> getUserdata(String uid) async {
     return await firestore.collection('users').doc(uid).get();
   }
 

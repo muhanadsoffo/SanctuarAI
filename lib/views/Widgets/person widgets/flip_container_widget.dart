@@ -11,11 +11,11 @@ class FlipContainerWidget extends StatefulWidget {
   State<FlipContainerWidget> createState() => _FlipContainerWidgetState();
 }
 
-class _FlipContainerWidgetState extends State<FlipContainerWidget> with SingleTickerProviderStateMixin {
+class _FlipContainerWidgetState extends State<FlipContainerWidget>
+    with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _animation;
   bool _isFront = true;
-
 
   @override
   void initState() {
@@ -51,7 +51,6 @@ class _FlipContainerWidgetState extends State<FlipContainerWidget> with SingleTi
 
   @override
   Widget build(BuildContext context) {
-
     return GestureDetector(
       onTap: () {
         _toggleCard();
@@ -83,10 +82,8 @@ class _FlipContainerWidgetState extends State<FlipContainerWidget> with SingleTi
 
       child: Card(
         elevation: 4,
-        
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12),
-        ),
+
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(
@@ -95,7 +92,11 @@ class _FlipContainerWidgetState extends State<FlipContainerWidget> with SingleTi
             children: [
               Row(
                 children: [
-                  CircleAvatar(backgroundColor: Colors.grey, radius: 60),
+                  CircleAvatar(
+                    backgroundColor: Colors.grey,
+                    radius: 60,
+                    backgroundImage: NetworkImage(widget.data['personPicture']),
+                  ),
                   SizedBox(width: 30),
                   Expanded(
                     child: Column(
@@ -125,11 +126,19 @@ class _FlipContainerWidgetState extends State<FlipContainerWidget> with SingleTi
                 ],
               ),
               SizedBox(height: 15),
-              ElevatedButton(onPressed: () async{
-               await Navigator.push(context, MaterialPageRoute(builder: (context)  {
-                  return  PersonDetails(pid: widget.data['pid'],);
-                },));
-              }, child: Text("See details"))
+              ElevatedButton(
+                onPressed: () async {
+                  await Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return PersonDetails(pid: widget.data['pid']);
+                      },
+                    ),
+                  );
+                },
+                child: Text("See details"),
+              ),
             ],
           ),
         ),
@@ -139,13 +148,9 @@ class _FlipContainerWidgetState extends State<FlipContainerWidget> with SingleTi
 
   Widget _buildBackCard() {
     return Container(
-
       child: Card(
-
         elevation: 4,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(
@@ -154,7 +159,10 @@ class _FlipContainerWidgetState extends State<FlipContainerWidget> with SingleTi
             children: [
               Text(
                 'Introduction:\n ${widget.data['intro']}',
-                style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                style: const TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ],
           ),

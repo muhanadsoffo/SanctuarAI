@@ -62,6 +62,7 @@ class _MostInteractedWidgetState extends State<MostInteractedWidget> {
                             CircleAvatar(
                               radius: 50,
                               backgroundColor: Colors.grey,
+                              backgroundImage: NetworkImage(person['personPicture']),
                             ),
 
                             Text(

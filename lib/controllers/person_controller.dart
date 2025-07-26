@@ -1,5 +1,7 @@
 
 
+import 'dart:io';
+
 import 'package:sanctuarai/services/auth_service.dart';
 import 'package:sanctuarai/services/person_service.dart';
 
@@ -10,7 +12,7 @@ class PersonController{
    required String name,
    required String gender,
    required String intro,
-   String? picture
+   required File picture
 })async{
    final uid= authService.value.currentUser!.uid;
    if (name.isEmpty || gender.isEmpty || intro.isEmpty){
@@ -18,7 +20,7 @@ class PersonController{
 
    }
    try{
-   await personService.value.createNewPerson(uid: uid, name: name, gender: gender, intro: intro);
+   await personService.value.createNewPerson(uid: uid, name: name, gender: gender, intro: intro,personPicture:picture );
    return null;
    }catch (e){
      print(e);

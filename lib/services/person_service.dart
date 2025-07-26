@@ -17,7 +17,7 @@ class PersonService {
     required String name,
     required String gender,
     required String intro,
-    String? personPicture,
+    required File personPicture,
     String? summary,
     String? advice,
     DateTime? lastSummarizedAt,
@@ -26,14 +26,31 @@ class PersonService {
     final uid = authService.value.currentUser!.uid;
     final personDoc =
         firestore.collection('users').doc(uid).collection('persons').doc();
+    final url = Uri.parse('https://api.cloudinary.com/v1_1/dnbyfymlx/upload');
+    final request = http.MultipartRequest('POST', url);
+    request.fields['upload_preset'] = 'sanctuarAI_persons';
+    request.fields['folder'] = 'persons';
 
+    request.files.add(
+      await http.MultipartFile.fromPath('file', personPicture.path),
+    );
+    final response = await request.send();
+    Map<String, dynamic>? jsonMap;
+    if (response.statusCode == 200) {
+      final responseData = await response.stream.toBytes();
+      final responseString = String.fromCharCodes(responseData);
+       jsonMap = jsonDecode(responseString);
+    }
+    if (jsonMap == null || !jsonMap.containsKey('secure_url')) {
+      throw Exception('Failed to upload image to Cloudinary');
+    }
     await personDoc.set({
       'pid': personDoc.id,
       'uid': uid,
       'name': name,
       'gender': gender,
       'intro': intro,
-      'personPicture': personPicture ?? "",
+      'personPicture': jsonMap['secure_url'],
       'entryNumber': entryNumber ?? 0,
       "aiResponse": {
         "advice": advice,

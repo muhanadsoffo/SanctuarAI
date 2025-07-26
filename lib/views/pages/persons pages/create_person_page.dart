@@ -1,5 +1,10 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:sanctuarai/controllers/person_controller.dart';
+
+
+import '../../Widgets/person widgets/profile_pic_widget.dart';
 
 class CreatePersonPage extends StatefulWidget {
   const CreatePersonPage({super.key});
@@ -11,13 +16,17 @@ class CreatePersonPage extends StatefulWidget {
 class _CreatePersonPageState extends State<CreatePersonPage> {
   final nameController = TextEditingController();
   final introController = TextEditingController();
+  File? selectedImage;
   String? menuItem;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-backgroundColor: Color(0xFFF1F6F9),
-      appBar: AppBar(title: Text("New Person"),backgroundColor: Color(0xFFF1F6F9),),
+      backgroundColor: Color(0xFFF1F6F9),
+      appBar: AppBar(
+        title: Text("New Person"),
+        backgroundColor: Color(0xFFF1F6F9),
+      ),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(8.0),
@@ -43,17 +52,9 @@ backgroundColor: Color(0xFFF1F6F9),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Center(
-                        child: CircleAvatar(
-                          radius: 75,
-                          backgroundColor: Colors.grey,
-                          child: Icon(
-                            Icons.person,
-                            size: 60,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
+                      ProfilePicWidget(onImagePicked :(File pickedImage){
+                        selectedImage = pickedImage;
+                      }),
                       SizedBox(height: 24),
                       Row(
                         children: [
@@ -63,11 +64,12 @@ backgroundColor: Color(0xFFF1F6F9),
                               controller: nameController,
                               maxLength: 25,
                               decoration: InputDecoration(
-                                labelStyle: TextStyle(
-                                  fontWeight: FontWeight.w600,
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(12),
                                 ),
                                 counterText: '',
-                                border: UnderlineInputBorder(),
+                                fillColor: Colors.grey.shade50,
+                                filled: true,
                                 hintText: 'Name',
                               ),
                             ),
@@ -114,8 +116,6 @@ backgroundColor: Color(0xFFF1F6F9),
                       SizedBox(height: 8),
                       TextField(
                         controller: introController,
-                        maxLines: 4,
-                        maxLength: 80,
                         decoration: InputDecoration(
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(12),
@@ -130,42 +130,47 @@ backgroundColor: Color(0xFFF1F6F9),
                         alignment: Alignment.center,
                         child: ElevatedButton.icon(
                           onPressed: () async {
-                            if(menuItem ==null){
+                            if (menuItem == null) {
                               ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(content: Text("please fill all the information"),backgroundColor: Colors.red,),
+                                SnackBar(
+                                  content: Text(
+                                    "please fill all the information",
+                                  ),
+                                  backgroundColor: Colors.red,
+                                ),
                               );
                               return;
                             }
                             String? error = await PersonController
-                                .personController.createPerson(
-                                name: nameController.text,
-                                gender: menuItem.toString(),
-                                intro: introController.text);
-                            if(error !=null){
-                              ScaffoldMessenger.of(
-                                context,
-                              ).showSnackBar(
+                                .personController
+                                .createPerson(
+                              picture: selectedImage!,
+                                  name: nameController.text,
+                                  gender: menuItem.toString(),
+                                  intro: introController.text,
+                                );
+                            if (error != null) {
+                              ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
                                   content: Text(error),
                                   backgroundColor: Colors.red,
                                 ),
                               );
-                            }else{
-                              ScaffoldMessenger.of(
-                                context,
-                              ).showSnackBar(
+                            } else {
+                              ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
-                                  content: Text(
-                                    "Person created successfully",
-                                  ),
+                                  content: Text("Person created successfully"),
                                   backgroundColor: Colors.green,
                                 ),
                               );
                               Navigator.pop(context);
                             }
                           },
-                          icon: Icon(Icons.person_add, color: Colors.white,
-                              size: 25),
+                          icon: Icon(
+                            Icons.person_add,
+                            color: Colors.white,
+                            size: 25,
+                          ),
                           label: Text(
                             "Add person",
                             style: TextStyle(color: Colors.white, fontSize: 18),

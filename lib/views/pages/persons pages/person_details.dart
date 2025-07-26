@@ -44,6 +44,7 @@ class _PersonDetailsState extends State<PersonDetails> {
                         child: CircleAvatar(
                           backgroundColor: Colors.grey,
                           radius: 70,
+                          backgroundImage: NetworkImage(person['personPicture']),
                         ),
                       ),
                     ),
