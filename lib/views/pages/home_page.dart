@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sanctuarai/views/Widgets/appbar_widget.dart';
+import 'package:sanctuarai/views/Widgets/home%20widgets/mental_health_summary_widget.dart';
 import 'package:sanctuarai/views/Widgets/home%20widgets/most_interacted_widget.dart';
 import 'package:sanctuarai/views/Widgets/home%20widgets/sliders_widget.dart';
 import 'package:sanctuarai/views/Widgets/navbar_widget.dart';
@@ -158,6 +159,7 @@ class _HomePageState extends State<HomePage> {
         ),
 
         SliverToBoxAdapter(child: MostInteractedWidget(),),
+        SliverToBoxAdapter(child: MentalHealthSummaryWidget(),),
         SliverFillRemaining()
       ],
     );

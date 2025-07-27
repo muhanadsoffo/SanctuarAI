@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:sanctuarai/controllers/auth_controller.dart';
@@ -16,47 +17,51 @@ class AppbarWidget extends StatefulWidget {
 }
 
 class _AppbarWidgetState extends State<AppbarWidget> {
+  Map<String, dynamic>? userData;
 
+  @override
+  void initState() {
+    super.initState();
+    fetchUserData();
+  }
+
+  Future<void> fetchUserData() async {
+    final doc = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(authService.value.currentUser!.uid)
+        .get();
+
+    setState(() {
+      userData = doc.data();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<DocumentSnapshot<Map<String, dynamic>>>(
-      future: userService.value.getUserdata(authService.value.currentUser!.uid),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return SizedBox(); // Or a loading indicator
-        }
+    if (userData == null) return SizedBox();
 
-        if (!snapshot.hasData || snapshot.data == null || snapshot.data!.data() == null) {
-          return Text("No user data found");
-        }
+    final imageUrl = userData?['profilePicture'] ?? '';
+    final name = userData?['name'] ?? 'Unknown';
 
-        final data = snapshot.data!.data()!;
-        final imageUrl = data['profilePicture'] as String? ?? '';
-        final name = data['name'] as String? ?? 'Unknown';
-
-        return Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Row(
           children: [
-            Row(
-              children: [
-                CircleAvatar(
-                  radius: 35,
-                  backgroundColor: Colors.grey,
-                  backgroundImage: imageUrl.trim().startsWith('http')
-                      ? NetworkImage(imageUrl)
-                      : null,
-                  child: (!imageUrl.trim().startsWith('http'))
-                      ? Icon(Icons.person, size: 30)
-                      : null,
-                ),
-                SizedBox(width: 10),
-                Text(name, style: TextStyle(fontSize: 18)),
-              ],
+            CircleAvatar(
+              radius: 35,
+              backgroundImage: imageUrl.trim().isNotEmpty
+                  ? CachedNetworkImageProvider(imageUrl)
+                  : null,
+              child: imageUrl.trim().isEmpty
+                  ? Icon(Icons.person, size: 30)
+                  : null,
             ),
+            SizedBox(width: 10),
+            Text(name, style: TextStyle(fontSize: 18)),
           ],
-        );
-      },
+        ),
+      ],
     );
   }
 }
