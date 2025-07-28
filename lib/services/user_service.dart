@@ -20,6 +20,8 @@ class UserService {
     required String email,
     String? profilePicture,
     String? bio,
+    String? summary,
+    DateTime? lastUpdated
   }) async {
     await firestore.collection('users').doc(uid).set({
       'name': name,
@@ -27,6 +29,12 @@ class UserService {
       'createdAt': Timestamp.now(),
       'profilePicture': profilePicture ?? '',
       'bio': bio ?? '',
+      "aiSummary": {
+        "summary": summary,
+        "lastUpdated": lastUpdated != null
+            ? Timestamp.fromDate(lastUpdated)
+            : FieldValue.serverTimestamp(),
+      }
     });
   }
 

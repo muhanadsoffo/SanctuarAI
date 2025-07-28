@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_launcher_icons/constants.dart';
 import 'package:sanctuarai/services/auth_service.dart';
 import 'package:sanctuarai/services/openai_service.dart';
 import 'package:sanctuarai/services/person_service.dart';
@@ -117,6 +118,66 @@ If the new entries are too vague or irrelevant to the relationship, respond with
       }
       return null;
     } catch (e) {
+      return e.toString();
+    }
+  }
+
+  Future<String?> mentalSummary({
+    required String uid,
+}) async{
+    try{
+      final userDoc = await firestore.collection('users').doc(uid).get();
+      final userSummary = userDoc.data()?['aiSummary']?['lastUpdated'];
+       final persons= await firestore.collection('users').doc(uid).collection('persons').get();
+       final updatedSummaries = persons.docs.where((doc){
+         final aiData= doc.data()['aiResponse'];
+         final summary = aiData?['summary'];
+         final lastSummarized = aiData?['lastSummarizedAt'];
+         if (summary== null || lastSummarized ==null) return false;
+         if(userSummary ==null) return true;
+         return lastSummarized.toDate().isAfter(userSummary.toDate());
+       }).toList();
+      if (updatedSummaries.isEmpty) {
+        return "No updates since last report.";
+      }
+
+      // Combine all summaries
+      final allSummaries = updatedSummaries.map((doc) {
+        final name = doc.data()['name'];
+        final summary = doc.data()['aiResponse']['summary'];
+        return "- $name: $summary";
+      }).join('\n');
+
+      final prompt = '''
+The following are summaries of different people in the user's life.
+Each summary reflects their emotional state and interactions with that person.
+
+Analyze the collection and write a mental health summary **directly addressed to the user**. 
+Be empathetic, warm, and supportive. Mention the user's name (${userDoc['name']}) in your message.
+be realistic too
+
+Summaries:
+$allSummaries
+
+Return your result in this exact JSON format:
+{
+  "summary": "..."
+}
+''';
+
+      final response = await openaiService.value.updateUserSummary(prompt: prompt, uid: uid);
+      if (response == null) return "AI failed to respond.";
+
+      // Save to user document
+      await firestore.collection('users').doc(uid).update({
+        "aiSummary": {
+          "summary": response['summary'],
+          "lastUpdated": FieldValue.serverTimestamp(),
+        }
+      });
+
+      return null;
+    }catch (e){
       return e.toString();
     }
   }
