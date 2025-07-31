@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sanctuarai/services/auth_service.dart';
 import 'package:sanctuarai/services/person_service.dart';
+import 'package:sanctuarai/views/pages/persons%20pages/person_details.dart';
 
 class MostInteractedWidget extends StatefulWidget {
   const MostInteractedWidget({super.key});
@@ -43,33 +44,67 @@ class _MostInteractedWidgetState extends State<MostInteractedWidget> {
                   itemCount: topPersons.length,
                   itemBuilder: (context, index) {
                     final person = topPersons[index];
-                    return Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
+                    return GestureDetector(
+                      onTap: () {
+                        Navigator.push(context, MaterialPageRoute(builder: (context) {
+                          return PersonDetails(pid: person['pid']);
+                        },));
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
 
+                        ),
+                        height: 160,
+                        width: 145,
+                        child: Card(
+                           shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
                       ),
-                      height: 160,
-                      width: 145,
-                      child: Card(
-                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
-                    ),
-                    elevation: 4,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
+                      elevation: 4,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
 
-                            CircleAvatar(
-                              radius: 50,
-                              backgroundColor: Colors.grey,
-                              backgroundImage: NetworkImage(person['personPicture']),
-                            ),
+                              Stack(
+                                clipBehavior: Clip.none,
+                                children: [
+                                  CircleAvatar(
+                                    radius: 50,
+                                    backgroundColor: Colors.grey,
+                                    backgroundImage: NetworkImage(person['personPicture']),
+                                  ),
+                                  Positioned(
+                                    top: -5,
+                                    right: -5,
+                                    child: Container(
+                                      padding: EdgeInsets.all(6),
+                                      decoration: BoxDecoration(
+                                        color: Colors.redAccent,
+                                        shape: BoxShape.circle,
+                                        border: Border.all(color: Colors.white, width: 2),
+                                      ),
+                                      child: Text(
+                                        '${person['entryNumber'] ?? 0}',
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
 
-                            Text(
-                              person['name'] ?? null,
-                              style: TextStyle(fontSize: 20),
-                            ),
-                          ],
+                              FittedBox(
+                                child: Text(
+                                  person['name'] ?? null,
+                                  style: TextStyle(fontSize: 20), 
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     );

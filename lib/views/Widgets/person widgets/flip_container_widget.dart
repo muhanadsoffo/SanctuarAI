@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sanctuarai/controllers/person_controller.dart';
 import 'package:sanctuarai/services/auth_service.dart';
 import 'package:sanctuarai/views/pages/persons%20pages/person_details.dart';
 
@@ -120,6 +121,13 @@ class _FlipContainerWidgetState extends State<FlipContainerWidget>
                           ),
                         ),
                         SizedBox(height: 7),
+                        Text(
+                          'Introduction: ${widget.data['intro']}',
+                          style: const TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
                       ],
                     ),
                   ),
@@ -153,18 +161,56 @@ class _FlipContainerWidgetState extends State<FlipContainerWidget>
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
         child: Padding(
           padding: const EdgeInsets.all(8.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+          child: Center(
+            child: IconButton(
+              onPressed: () async {
+                final confirmed = await showDialog<bool>(
+                  context: context,
+                  builder: (context) => AlertDialog(
+                    title: Text("Delete Person"),
+                    content: Text("Are you sure you want to delete this person and all related entries?"),
+                    actions: [
+                      TextButton(
+                        onPressed: () => Navigator.pop(context, false),
+                        child: Text("Cancel"),
+                      ),
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.purple,
+                        ),
+                        onPressed: () => Navigator.pop(context, true),
+                        child: Text("Delete",style: TextStyle(color: Colors.white),),
+                      ),
+                    ],
+                  ),
+                );
 
-            children: [
-              Text(
-                'Introduction:\n ${widget.data['intro']}',
-                style: const TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ],
+                if (confirmed != true) return; // Exit if user cancels
+
+                String? error = await PersonController().deleteThisPerson(
+                  uid: authService.value.currentUser!.uid,
+                  pid: widget.data['pid'],
+                );
+
+                if (error != null) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text("Error deleting person: $error"),
+                      backgroundColor: Colors.red,
+                    ),
+                  );
+                } else {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text("Person deleted successfully"),
+                      backgroundColor: Colors.green,
+                    ),
+                  );
+                  Navigator.pop(context); // Optionally navigate back
+                }
+              },
+              icon: Icon(Icons.delete_sharp, size: 50, color: Colors.red),
+            )
           ),
         ),
       ),

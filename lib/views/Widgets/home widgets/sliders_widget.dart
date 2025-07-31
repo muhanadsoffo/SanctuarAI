@@ -46,7 +46,7 @@ class _SlidersWidgetState extends State<SlidersWidget> {
                         Text(
                           card['title'],
                           style: TextStyle(
-                            fontSize: 18,
+                            fontSize: 20,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -73,7 +73,7 @@ class _SlidersWidgetState extends State<SlidersWidget> {
 
   final List<Map<String, dynamic>> cardsSlider = [
     {
-      'title': "Your Mental Health Matters More Than You Think!",
+      'title': "Prioritize Yourself!",
       'desc':
           "With SenctuarAI you can keep track of how people affect your mentality",
       'gradient': LinearGradient(

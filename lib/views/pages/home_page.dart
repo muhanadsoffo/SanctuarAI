@@ -160,7 +160,7 @@ class _HomePageState extends State<HomePage> {
 
         SliverToBoxAdapter(child: MostInteractedWidget(),),
         SliverToBoxAdapter(child: MentalHealthSummaryWidget(),),
-        SliverFillRemaining()
+
       ],
     );
   }

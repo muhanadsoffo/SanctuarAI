@@ -81,15 +81,6 @@ class PersonService {
         .get();
   }
 
-  Future<void> deletePerson(String pid) async {
-    final uid = authService.value.currentUser!.uid;
-    return await firestore
-        .collection('users')
-        .doc(uid)
-        .collection('persons')
-        .doc(pid)
-        .delete();
-  }
 
   Future<void> updateOnResponse({
     required String summary,
@@ -167,5 +158,19 @@ class PersonService {
       print("failed to uploaaaaaaaad : ${response.statusCode}");
       return null;
     }
+  }
+
+  Future<void> deletePerson({
+    required String uid,
+    required String pid,
+  }) async {
+    final personRef = firestore.collection('users').doc(uid).collection('persons').doc(pid);
+    final entriesRef = personRef.collection('entries');
+
+    final entriesSnapshot = await entriesRef.get();
+    for (final doc in entriesSnapshot.docs) {
+      await doc.reference.delete();
+    }
+    await personRef.delete();
   }
 }

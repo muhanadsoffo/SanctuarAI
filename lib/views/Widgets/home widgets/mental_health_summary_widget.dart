@@ -72,7 +72,7 @@ class _MentalHealthSummaryWidgetState extends State<MentalHealthSummaryWidget> {
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: Container(
-            height: 250,
+            constraints: BoxConstraints(maxHeight: 300), // allows room to expand but not too much
             width: double.infinity,
             child: Card(
               color: Color(0xFFc6fcf7),
@@ -87,7 +87,7 @@ class _MentalHealthSummaryWidgetState extends State<MentalHealthSummaryWidget> {
                     : Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Expanded(
+                    Flexible(
                       child: SingleChildScrollView(
                         child: Text(
                           _summary ?? "There is no analysis yet!",
@@ -119,7 +119,9 @@ class _MentalHealthSummaryWidgetState extends State<MentalHealthSummaryWidget> {
                 ),
               ),
             ),
-          ),
+          )
+
+
         ),
       ],
     );

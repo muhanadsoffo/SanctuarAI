@@ -11,8 +11,8 @@ class ProfilePictureWidget extends StatefulWidget {
 }
 
 class _ProfilePictureWidgetState extends State<ProfilePictureWidget> {
-
   String? imageUrl;
+
   @override
   void initState() {
     // TODO: implement initState
@@ -20,13 +20,14 @@ class _ProfilePictureWidgetState extends State<ProfilePictureWidget> {
     fetchCurrentImage();
   }
 
-  Future<void> fetchCurrentImage() async{
-    final userDoc = await userService.value.getUserdata(authService.value.currentUser!.uid);
+  Future<void> fetchCurrentImage() async {
+    final userDoc = await userService.value.getUserdata(
+      authService.value.currentUser!.uid,
+    );
     setState(() {
       imageUrl = userDoc['profilePicture'];
     });
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -36,23 +37,31 @@ class _ProfilePictureWidgetState extends State<ProfilePictureWidget> {
         CircleAvatar(
           radius: 70,
           backgroundColor: Colors.grey,
-          backgroundImage: (imageUrl != null && imageUrl!.trim().isNotEmpty)
-              ? NetworkImage(imageUrl!)
-              : null,
-          child: (imageUrl == null || imageUrl!.trim().isEmpty)
-              ? Icon(Icons.person, size: 60)
-              : null,
+          backgroundImage:
+              (imageUrl != null && imageUrl!.trim().isNotEmpty)
+                  ? NetworkImage(imageUrl!)
+                  : null,
+          child:
+              (imageUrl == null || imageUrl!.trim().isEmpty)
+                  ? Icon(Icons.person, size: 60)
+                  : null,
         ),
-        IconButton(onPressed: () async{
-          final newUrl = await UserController().editProfilePicture();
-          if(newUrl != null){
-            setState(() {
-              imageUrl = newUrl;
-            });
-          }
-        }, icon: Icon(Icons.add_a_photo))
+        IconButton(
+          onPressed: () async {
+            final newUrl = await UserController().editProfilePicture();
+            if (newUrl != null) {
+              setState(() {
+                imageUrl = newUrl;
+              });
+            }
+          },
+          icon: Icon(
+            Icons.add_a_photo_sharp,
+            color: Colors.white,
+            shadows: [Shadow(offset: Offset(0, 1))],
+          ),
+        ),
       ],
     );
   }
-
 }

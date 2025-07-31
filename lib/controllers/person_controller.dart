@@ -27,6 +27,17 @@ class PersonController{
      return "error $e";
    }
  }
+ Future<String?> deleteThisPerson({
+   required String uid,
+   required String pid
+}) async{
+   try{
+     await personService.value.deletePerson(uid: uid, pid: pid);
+     return null;
+   }catch (e){
+     return "there was an error ${e.toString()}";
+   }
+ }
 
 
 }
